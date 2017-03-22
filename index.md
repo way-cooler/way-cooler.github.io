@@ -5,4 +5,8 @@
 layout: home
 ---
 
-<p>Hello world</p>
+Way Cooler is a tiling [Wayland](https://wayland.freedesktop.org) window manager, written in [Rust](https://www.rust-lang.org), configurable using [Lua](https://lua.org), and extendable with [D-Bus](https://dbus.freedesktop.org).
+
+# Extendable
+# Configurable
+# Secure

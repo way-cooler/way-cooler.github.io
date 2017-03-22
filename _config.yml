@@ -20,6 +20,17 @@ description: > # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://way-cooler.org" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  Way-Cooler
+lua_doc_sections: {
+    configuration: [
+        "programs",
+        "windows",
+        "mouse",
+    ], 
+    utils: [
+        "program",
+    ]
+}
+
 
 # Build settings
 markdown: kramdown

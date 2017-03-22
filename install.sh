@@ -13,16 +13,7 @@ assert_file_exists "way-cooler"
 assert_file_exists "way-cooler-bg"
 
 if ! [[ $(id -u) = 0 ]] && ! [[ $# == 1 ]]; then
-    echo -e "\e[31m"
-    echo "The install script should be run as root!"
-    echo -e "\e[0m \e[93m"
-    echo "If you *really* want to install Way Cooler as a user, please pass an install path to this script, like so:"
-    echo -e "\e[0m"
-    echo "./install.sh ~/bin"
-    echo -e "\e[31m"
-    echo "It it highly discouraged to install Way Cooler as your regular user, as it makes it much less secure!"
-    echo -e "\e[0m"
-    exit 1
+    exec sudo -- "$0" "$@"
 fi
 
 install_path=$1;

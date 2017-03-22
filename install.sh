@@ -13,6 +13,10 @@ assert_file_exists "way-cooler"
 assert_file_exists "way-cooler-bg"
 
 if ! [[ $(id -u) = 0 ]] && ! [[ $# == 1 ]]; then
+    echo -e "\e[31m"
+    echo "The install script will be ran as root!"
+    echo -e "\e[0m \e[93m"
+    echo "Please provide your password so that installation can commence"
     exec sudo -- "$0" "$@"
 fi
 
@@ -20,7 +24,11 @@ install_path=$1;
 : ${install_path:='/usr/bin'}
 [ -d $install_path ] || mkdir $install_path
 
+echo "Installing to $install_path..."
+
+echo "Installing $install_path/way-cooler"
 cp way-cooler $install_path
+echo "Installing $install_path/way-cooler-bg"
 cp way-cooler-bg $install_path
 
 chown $USER $install_path/way-cooler

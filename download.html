@@ -1,0 +1,26 @@
+---
+layout: page
+title: Download
+permalink: /download/
+---
+
+<p>Way Cooler comes in two primary flavors: i3 and awesome.</p>
+<p>The i3 flavor is set up like a default i3 install, with the same keybindings and tiling algorithm. The only difference between this flavor and actual i3 is that the primary configuration format is still Lua.</p>
+<p>The awesome flavor disables the i3 controls and gives Lua full control of the tiling. Just like awesome, there are customizable modes to switch between that control how windows are laid out on the screen.</p>
+<p>We also ship with various default themes. Feel free to submit your own and we might add them to the list!</p>
+<div class="download-selectors">
+    Flavor:
+    <select>
+        <option value="i3">i3</option>
+        <!-- TODO Enable once we have awesome features -->
+        <option value="awesome">awesome</option> 
+    </select>
+    Theme:
+    <select>
+        <option value="default">default</option>
+    </select>
+</div>
+<div class="download-section">
+    <h3>Quick Download:</h3>
+    <pre>curl https://way-cooler-github.io/way-cooler-release-i3-default.sh -sSf | sh</pre>
+</div>

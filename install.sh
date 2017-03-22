@@ -13,10 +13,9 @@ assert_file_exists "way-cooler"
 assert_file_exists "way-cooler-bg"
 
 if ! [[ $(id -u) = 0 ]] && ! [[ $# == 1 ]]; then
-    echo -e "\e[31m"
-    echo "The install script will be ran as root!"
-    echo -e "\e[0m \e[93m"
-    echo "Please provide your password so that installation can commence"
+    echo -e "\e[31mThe install script will be ran as root!"
+    echo -e "\e[0m"
+    echo "Please provide your password so that installation can commence:"
     exec sudo -- "$0" "$@"
 fi
 

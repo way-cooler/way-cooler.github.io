@@ -163,7 +163,13 @@
  */
 .home {
     .home-content {
-        display: inline-flex
+        .description {
+            flex: 0 0 33.333337%;
+        }
+        display: inline-flex;
+    }
+    .home-image {
+        flex: 0 0 66.66667%;
     }
 }
 

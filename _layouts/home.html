@@ -3,21 +3,14 @@ layout: default
 ---
 
 <div class="home">
-
   <h1 class="page-heading">Posts</h1>
-  
-  {{ content }}
+  <div class="home-content" style="display: inline-flex">
+      <p class="description">
+      {{ content }}
+      </p>
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
-
+      <div class="home-image">
+          <img src="/images/example-image.png"/>
+      </div>
+  </div>
 </div>

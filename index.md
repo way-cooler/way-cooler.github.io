@@ -18,6 +18,6 @@ Lua is a first class citizen of Way Cooler. Tiling options, window rules, and th
 [Consult our Lua documentation for more details](/docs/lua)
 
 # Secure
-Way Cooler is designed from the ground up to be secure. Rust prevents Way Cooler from ever having a data race, use after free, or a segfault. Security vulnerabilities from buffer overruns are a thing of the past. 
+Way Cooler is designed from the ground up to be secure. Rust prevents Way Cooler from ever having a data race, dangling pointers, or a segfault. Large classes of security vulnerabilities, such as from buffer overruns or use after free, are a thing of the past. 
 
 In order to maximize the security guarantees of Wayland, all client programs must first be authenticated using Lua, and are only granted the permissions they require in order to do their task. Applications can no longer read your keystrokes unless you give them explicit permission to do so.

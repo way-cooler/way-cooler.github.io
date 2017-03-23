@@ -28,6 +28,19 @@
     </li>
     <li>
         <a href="/docs/d-bus">D-Bus Documentation</a>
-        <!-- TODO Add d-bus document generation -->
+        <ul>
+            {% for interface in site.dbus_doc_sections %}
+                <li>
+                    <a href="/docs/d-bus#{{ interface[0] }}">{{ interface[0] | capitalize }}</code></a>
+                    <ul>
+                        {% for index in interface[1] %}
+                            <li>
+                                <a href="/docs/d-bus${{ interface[0] }}{{ index }}"><code>{{ index }}</code></a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
     </li>
 </ul>

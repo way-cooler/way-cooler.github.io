@@ -31,6 +31,27 @@ lua_doc_sections: {
     ]
 }
 
+dbus_doc_sections: {
+    layout: [
+        "ActiveContainerId",
+        "ActiveWorkspace",
+        "CloseView",
+        "ContainerInActiveWorkspace",
+        "Debug",
+        "Focus",
+        "FocusDir",
+        "FullScreen",
+        "GrabAtCorner",
+        "MoveContainer",
+        "SendToWorkspace",
+        "SetPointerPos",
+        "SplitContainer",
+        "SwitchWorkspace",
+        "ToggleCardinalTiling",
+        "ToggleFloat",
+    ]
+}
+
 
 # Build settings
 markdown: kramdown

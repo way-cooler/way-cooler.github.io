@@ -17,7 +17,9 @@
       <div class="trigger">
         {% for my_page in site.pages %}
           {% if my_page.title %}
+          {% unless my_page.title == "D-Bus Documentation" or my_page.title == "Lua Documentation" %}
           <a class="page-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a>
+          {% endunless %}
           {% endif %}
         {% endfor %}
         <a class="page-link" href="https://github.com/way-cooler">Source</a>

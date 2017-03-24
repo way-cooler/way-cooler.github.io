@@ -25,7 +25,8 @@ curl -fsSL $GRAB_URL > $TMP_DIR/wc-grab || cleanup
 echo "Fetching second stage install script..."
 curl -fsSL $SECOND_STAGE_URL > $TMP_DIR/install.sh || cleanup
 
-echo $(ls /tmp/way-cooler)
+chmod a+x $TMP_DIR/install.sh
+
 echo "Starting second stage"
 (cd $TMP_DIR; ./install.sh)
 cleanup

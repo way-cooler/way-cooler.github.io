@@ -21,12 +21,11 @@ curl -fsSL $WM_URL > $TMP_DIR/way-cooler || cleanup
 echo "Fetching way-cooler-bg..."
 curl -fsSL $BG_URL > $TMP_DIR/way-cooler-bg || cleanup
 echo "Fetching wc-grab..."
-curl -fsSL $GRAB_URL > $TMP_DIR/way-cooler-bg || cleanup
+curl -fsSL $GRAB_URL > $TMP_DIR/wc-grab || cleanup
 echo "Fetching second stage install script..."
 curl -fsSL $SECOND_STAGE_URL > $TMP_DIR/install.sh || cleanup
 
-chmod a+x $TMP_DIR/install.sh
-
+echo $(ls /tmp/way-cooler)
 echo "Starting second stage"
 (cd $TMP_DIR; ./install.sh)
 cleanup

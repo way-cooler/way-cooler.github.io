@@ -169,10 +169,16 @@
     .home-content {
         .description {
             flex: 0 0 33.333337%;
+            @include media-query($on-palm) {
+                flex: inherit;
+            }
         }
         display: inline-flex;
     }
     .home-image {
+        @include media-query($on-palm) {
+            display: none;
+        }
         flex: 0 0 66.66667%;
         padding-left: 10px;
     }
@@ -216,6 +222,7 @@
 .download-section {
   pre {
     display: inline-block;
+    max-width: 85vw;
   }
 }
 .download-selectors {

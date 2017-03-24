@@ -31,17 +31,17 @@ cp way-cooler $install_path
 echo "Installing $install_path/way-cooler-bg"
 cp way-cooler-bg $install_path
 echo "Installing $install_path/wc-grab"
-cp way-cooler-grab $install_path
+cp wc-grab $install_path
 
 chown $USER $install_path/way-cooler
 chgrp $USER $install_path/way-cooler
-chmod a+x $install_path/way-cooler
+chmod +x $install_path/way-cooler
 chown $USER $install_path/way-cooler-bg
 chgrp $USER $install_path/way-cooler-bg
-chmod a+x $install_path/way-cooler-bg
-chown $USER $install_path/way-cooler-grab
-chgrp $USER $install_path/way-cooler-grab
-chmod a+x $install_path/way-cooler-grab
+chmod +x $install_path/way-cooler-bg
+chown $USER $install_path/wc-grab
+chgrp $USER $install_path/wc-grab
+chmod +x $install_path/wc-grab
 
 if ! [[ $(pidof systemd) ]] && [[ $(id -u) = 0 ]]; then
     echo "systemd is not installed on this machine, activating the setuid bit on $install_path/way-cooler"

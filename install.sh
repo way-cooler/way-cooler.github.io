@@ -2,29 +2,62 @@
 set -eo pipefail
 IFS=$'\n\t'
 
-function assert_file_exists() {
-    if ! [ -f "$1" ]; then
-        echo -e "\e[31mCould not find file \"$1\", halting...\e[0m"
-        exit 1
-    fi
+function cleanup() {
+    rm -rf $TMP_DIR
+    exit 1
 }
 
-assert_file_exists "way-cooler"
-assert_file_exists "way-cooler-bg"
-assert_file_exists "wc-grab"
+WM_VERSION="v0.5.2"
+BG_VERSION="v0.1.0"
+GRAB_VERSION="v0.1.0"
+TMP_DIR=/tmp/way-cooler
+WM_URL=https://github.com/way-cooler/way-cooler/releases/download/$WM_VERSION/way-cooler
+BG_URL=https://github.com/way-cooler/way-cooler-bg/releases/download/$BG_VERSION/way-cooler-bg
+GRAB_URL=https://github.com/way-cooler/way-cooler-grab/releases/download/$GRAB_VERSION/wc-grab
+
+mkdir $TMP_DIR
+
+INSTALL_LIST=($WM_URL)
+while test $# -gt 0; do
+    case "$1" in
+        way-cooler-bg)
+            INSTALL_LIST+=($BG_URL)
+        ;;
+        wc-grab)
+            INSTALL_LIST+=($GRAB_URL)
+        ;;
+        *)
+        ;;
+    esac
+    shift
+done
+for url in ${INSTALL_LIST[@]}; do
+    name=${url##*/}
+    echo "Fetching $name..."
+    curl -fsSL $url > $TMP_DIR/$name || cleanup
+done
+
+echo "Starting second stage"
 
 if ! [[ $(id -u) = 0 ]] && ! [[ $# == 1 ]]; then
     echo -e "\e[31mThe install script will be ran as root!"
     echo -e "\e[0m"
     echo "Please provide your password so that installation can commence:"
-    exec sudo -k -- "$0" "$@"
+    #TODO Readd -k
+    exec sudo -- "$0" "$@"
 fi
 
-install_path=$1;
+(cd $TMP_DIR;
+# We'll enable custom install paths later
+#install_path=$1;
 : ${install_path:='/usr/bin'}
 [ -d $install_path ] || mkdir $install_path
 
 echo "Installing to $install_path..."
+
+for file in *; do
+    echo $file
+done
 
 echo "Installing $install_path/way-cooler"
 cp way-cooler $install_path
@@ -49,3 +82,6 @@ if ! [[ $(pidof systemd) ]] && [[ $(id -u) = 0 ]]; then
 fi
 
 echo -e "\e[32mWay Cooler has been installed on your system\e[0m"
+
+)
+cleanup

@@ -23,6 +23,8 @@ for file in *; do
         chown $USER $install_path/$file
         chgrp $USER $install_path/$file
         chmod +x $install_path/$file
+
+        echo -e "\e[32m$file has been installed on your system\e[0m"
     fi
 done
 
@@ -30,5 +32,3 @@ if ! [[ $(pidof systemd) ]] && [[ $(id -u) = 0 ]]; then
     echo "systemd is not installed on this machine, activating the setuid bit on $install_path/way-cooler"
     chmod u+s $install_path/way-cooler
 fi
-
-echo -e "\e[32mWay Cooler has been installed on your system\e[0m"

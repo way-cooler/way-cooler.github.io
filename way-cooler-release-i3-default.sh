@@ -31,6 +31,7 @@ while test $# -gt 0; do
             INSTALL_LIST+=($GRAB_URL)
             ;;
         *)
+            echo -e "\e[93mUnknown program $1! Skipping...\e[0m"
             ;;
     esac
     shift

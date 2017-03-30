@@ -16,18 +16,32 @@ SECOND_STAGE_URL=https://way-cooler.github.io/install.sh
 
 mkdir $TMP_DIR
 
-echo "Fetching way-cooler..."
-curl -fsSL $WM_URL > $TMP_DIR/way-cooler || cleanup
-echo "Fetching way-cooler-bg..."
-curl -fsSL $BG_URL > $TMP_DIR/way-cooler-bg || cleanup
-echo "Fetching wc-grab..."
-curl -fsSL $GRAB_URL > $TMP_DIR/wc-grab || cleanup
 echo "Fetching second stage install script..."
 curl -fsSL $SECOND_STAGE_URL > $TMP_DIR/install.sh || cleanup
 
 chmod a+x $TMP_DIR/install.sh
 
+INSTALL_LIST=($WM_URL)
+while test $# -gt 0; do
+    case "$1" in
+        way-cooler-bg)
+            INSTALL_LIST+=($BG_URL)
+            ;;
+        wc-grab)
+            INSTALL_LIST+=($GRAB_URL)
+            ;;
+        *)
+            ;;
+    esac
+    shift
+done
+for url in ${INSTALL_LIST[@]}; do
+    name=${url##*/}
+    echo "Fetching $name..."
+    curl -fsSL $url > $TMP_DIR/$name || cleanup
+done
+
 echo "Starting second stage"
-(cd $TMP_DIR; ./install.sh)
+(cd $TMP_DIR; ./install.sh || cleanup)
 cleanup
 

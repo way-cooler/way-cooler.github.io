@@ -6,7 +6,7 @@ if ! [[ $(id -u) = 0 ]] && ! [[ $# == 1 ]]; then
     echo -e "\e[31mThe install script will be ran as root!"
     echo -e "\e[0m"
     echo "Please provide your password so that installation can commence:"
-    exec sudo -- "$0" "$@"
+    exec sudo -k -- "$0" "$@"
 fi
 
 # We'll enable custom install paths later

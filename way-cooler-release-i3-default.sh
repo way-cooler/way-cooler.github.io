@@ -6,7 +6,7 @@ function cleanup() {
 }
 
 WM_VERSION="v0.5.2"
-BG_VERSION="v0.1.0"
+BG_VERSION="v0.2.0"
 GRAB_VERSION="v0.1.0"
 TMP_DIR=/tmp/way-cooler
 WM_URL=https://github.com/way-cooler/way-cooler/releases/download/$WM_VERSION/way-cooler

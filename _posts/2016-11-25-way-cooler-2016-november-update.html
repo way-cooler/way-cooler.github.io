@@ -1,0 +1,66 @@
+---
+layout: post
+title: Way Cooler Alpha Update (2016 November)
+date: 2016-11-25
+categories: blog
+---
+<section class="main-content">
+    <p>Hey everyone! It's been a while since we've posted an update about Way Cooler. There wasn't enough going on per week to do a "this week in Way Cooler" like so many other, more important projects are doing, but enough has finally changed to warrant an update.</p>
+    <h4>Changing tracks on the top bar</h4>
+
+    <p>First things first, after reviewing the reaction from the community about the bundled Electron bar, we have decided to scrap it in favor for a bar powered by Conrod and Lua. Conrod was chosen because it seems to be an easy to use framework, both for us as developers and potentially others as users/contributors, and Lua was chosen to match the init / configuration file.</p>
+
+    <p>The plan is to build a light framework where you can specify components using Lua, and decide how to place them on the bar. This will let the bar configuration stay high-level (no rooting around big, complicated source code), while at the same time keeping it as configurable as possible. Ultimately, because the bar is a client program to Way Cooler, if users don't like it they are free to roll their own using whatever language or GUI framework they want. Which leads me to our second biggest feature...</p>
+
+    <h4>D-Bus IPC</h4>
+
+    <p>We changed from an ad-hoc IPC to the much more standard <a href="https://dbus.freedesktop.org/
+">D-Bus!</a></p>
+
+    <p>One of the biggest goals of Way Cooler is to have as many parts as swappable as possible, so we try to push as much functionality as we can <em>out</em> of Way Cooler into client programs. With D-Bus, we can code our client programs to a well defined interface, keeping our protocol open for both extension and replacement of clients (all they need to do is speak the interface). Most languages come with some sort of D-Bus library, so there will no longer be a need for us to make client libraries for different languages since that comes for free with D-Bus!</p>
+
+    <p>Currently, the sample tree display program has been the only thing ported to use this new D-Bus api, you can see it <a href="https://github.com/Immington-Industries/Way-Cooler-Example-Clients">here</a>.</p>
+
+    <p>The newly split up background program will eventually utilize the D-Bus api, which will allow different types of background programs to exist. You could use the simple one we have now, that basically does the minimum and just puts an image on the screen, or you could use a complicated one that swaps it out depending on the color scheme, or one that changes per day, or another that can be remotely controlled... the possiblities are endless, now that it exists as a separate program.</p>
+
+    <h4>New distribution model</h4>
+
+    <p>Since the background functionality is no longer built in the same binary as Way Cooler, this presents a problem that we were bound to hit sooner or later: installing Way Cooler from crates.io using <code>cargo install way-cooler</code> will no longer give you a fully working version of Way Cooler.</p>
+
+    <p>In general, distribution of Way Cooler through crates.io has proved to be a problem, not only for handling non-binary files (such as default configuration files or other assets), but also for users trying out the window manager. There have been a lot of people confused about the wlc dependency, and while it's easy to point them to the project page to show how to compile it, most potential users will be turned off for having to do so much work just to try an unproven window manager.</p>
+
+    <p>So, in order to fix both of these problems in one fell swoop, we will soon be introducing distributions that are self contained and statically linked to wlc. We will start simple, and just be distributing zipped versions through Github on each release. This doesn't give the benefit of easily updating Way Cooler unfortunately, but it is distro-independent and very easy to setup.</p>
+
+    <p>Eventually, we'll add official packages for both rpm and apt. If you are on Arch, feel free to continue using the <a href="https://aur.archlinux.org/packages/way-cooler/">AUR package</a>. It will statically link to wlc and also install <code>way-cooler-bg</code> with all the necessary assets.</p>
+
+    <h4>New tiling features</h4>
+
+    <p>Finally, there have also been some additional features added to the tiling of Way Cooler.</p>
+
+    <p>We have added floating windows (<code>alt+shift+space</code>), which work just like the ones in i3 (they always sit on top of the tiled views)</p>
+
+    <p>We have also added tho ability to resize windows. There isn't yet a keybinding to resize the windows (it will probably be added later, it would require adding "modes" to the tiling system, which I want to put more thought into for extension), but you can resize windows today by using <code>ctrl+right-click</code> and dragging around. You can grab any part of the frame, and it will begin to resize the window. This works for tiled as well, and automatically ensures that windows stay the correct size they need to in order to remain visible.</p>
+
+    <p>You can see the entire changelog <a href="https://github.com/Immington-Industries/way-cooler/releases/tag/v0.4.0">here</a>.</p>
+
+    <h4>Up Next</h4>
+
+    <p>As for what we are going to work on next, here is a short list of things to expect in the near future from us, in no particular order:</p>
+
+    <ul>
+    <li>A way-cooler-bar, with widgets expressed through Lua.</li>
+
+    <li>Server side decorations on windows.</li>
+
+    <li>Tabbed/Stacked Tiling.</li>
+
+    <li>Awesome-style tiling, using Lua to define window placement.</li>
+
+    <li>In-place restart of Way Cooler, allowing iterative configuration development.</li>
+
+    <li>Multi-head support.</li>
+    </ul>
+
+    <p>Track the progress of these features on our <a href="https://github.com/Immington-Industries/way-cooler/issues">issues page</a>.</p>
+
+</section>

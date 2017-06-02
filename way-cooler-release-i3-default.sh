@@ -17,7 +17,7 @@ BG_URL=https://github.com/way-cooler/way-cooler-bg/releases/download/$BG_VERSION
 GRAB_URL=https://github.com/way-cooler/way-cooler-grab/releases/download/$GRAB_VERSION/wc-grab
 LOCK_URL=https://github.com/way-cooler/way-cooler-lock/releases/download/$LOCK_VERSION/wc-lock
 LOCK_PAM_URL=https://github.com/way-cooler/way-cooler-lock/releases/download/$LOCK_VERSION/wc-lock-pam
-SECOND_STAGE_URL=http://localhost:4000/install.sh #https://way-cooler.github.io/install.sh
+SECOND_STAGE_URL=https://way-cooler.github.io/install.sh
 
 mkdir $TMP_DIR
 

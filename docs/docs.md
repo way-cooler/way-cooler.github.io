@@ -1,5 +1,5 @@
 ---
-layout: docs
+layout: docs-listing
 title: Documentation
 permalink: /docs/
 ---

@@ -1,0 +1,3 @@
+[submodule "way-cooler"]
+	path = way-cooler
+	url = https://github.com/way-cooler/way-cooler/

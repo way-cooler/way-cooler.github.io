@@ -4,7 +4,7 @@ window.onload = function() {
     let lock = document.getElementsByName("wc-lock")[0];
 
     function update_download() {
-        const install = "curl https://way-cooler.github.io/way-cooler-release-i3-default.sh -sSf | sh -s ";
+        const install = "curl https://way-cooler.github.io/way-cooler-release-i3-default.sh -sSLf | sh -s ";
         let bg_checked = bg.checked ? " way-cooler-bg " : "";
         let grab_checked = grab.checked ? " wc-grab " : "";
         let lock_checked = lock.checked ? " wc-lock " : "";

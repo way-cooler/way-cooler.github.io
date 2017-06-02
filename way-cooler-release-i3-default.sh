@@ -5,14 +5,19 @@ function cleanup() {
     exit 1
 }
 
+# VERSION NUMBERS
 WM_VERSION="v0.5.2"
 BG_VERSION="v0.2.0"
 GRAB_VERSION="v0.1.0"
+LOCK_VERSION="v0.1.0"
+
 TMP_DIR=/tmp/way-cooler
 WM_URL=https://github.com/way-cooler/way-cooler/releases/download/$WM_VERSION/way-cooler
 BG_URL=https://github.com/way-cooler/way-cooler-bg/releases/download/$BG_VERSION/way-cooler-bg
 GRAB_URL=https://github.com/way-cooler/way-cooler-grab/releases/download/$GRAB_VERSION/wc-grab
-SECOND_STAGE_URL=https://way-cooler.github.io/install.sh
+LOCK_URL=https://github.com/way-cooler/way-cooler-lock/releases/download/$LOCK_VERSION/wc-lock
+LOCK_PAM_URL=https://github.com/way-cooler/way-cooler-lock/releases/download/$LOCK_VERSION/wc-lock-pam
+SECOND_STAGE_URL=http://localhost:4000/install.sh #https://way-cooler.github.io/install.sh
 
 mkdir $TMP_DIR
 
@@ -29,6 +34,10 @@ while test $# -gt 0; do
             ;;
         wc-grab)
             INSTALL_LIST+=($GRAB_URL)
+            ;;
+        wc-lock)
+            INSTALL_LIST+=($LOCK_URL)
+            INSTALL_LIST+=($LOCK_PAM_URL)
             ;;
         *)
             echo -e "\e[93mUnknown program $1! Skipping...\e[0m"

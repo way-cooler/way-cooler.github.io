@@ -18,6 +18,16 @@ echo "Installing to $install_path..."
 
 for file in *; do
     if [ "./$file" != $0 ]; then
+        # TODO Hack to install wc-lock pam file
+        # wc-lock should have its own install script that does this, and
+        # it should be called.
+        if [ "./$file" == "./wc-lock-pam" ]; then
+            echo "Installing wc-lock to /etc/pam.d/"
+            cp $file /etc/pam.d/
+            mv /etc/pam.d/$file /etc/pam.d/wc-lock
+            chmod 0644 /etc/pam.d/wc-lock
+            continue;
+        fi
         echo "Installing $file to $install_path/$file"
         cp $file $install_path
         chown $USER $install_path/$file

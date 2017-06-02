@@ -6,7 +6,7 @@ function cleanup() {
 }
 
 # VERSION NUMBERS
-WM_VERSION="v0.5.2"
+WM_VERSION="v0.6.0"
 BG_VERSION="v0.2.0"
 GRAB_VERSION="v0.1.0"
 LOCK_VERSION="v0.1.0"

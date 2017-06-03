@@ -30,9 +30,16 @@ lua_doc_sections: {
         "windows",
         "mouse",
     ], 
-    utils: [
-        "program",
-    ]
+    utils: {
+        program: [
+            "spawn",
+            "spawn_once",
+            "spawn_at_startup",
+            "spawn_startup_programs",
+            "terminate_startup_programs",
+            "restart_startup_programs"
+        ],
+    }
 }
 
 dbus_doc_sections: {

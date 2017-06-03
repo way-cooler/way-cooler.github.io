@@ -1,6 +1,8 @@
-{% for interface in site.lua_doc_sections %}
-    {% for index in interface[1] %}
-        {% capture my_include %}{% include docs/lua/{{index}}.md %}{% endcapture %}
-        {{ my_include | markdownify }}
+{% for section in site.lua_doc_sections %}
+    {% for subsection in section[1] %}
+        {% for article in subsection[1] %}
+            {% capture my_include %}{% include docs/lua/{{article}}.md %}{% endcapture %}
+            {{ my_include | markdownify }}
+        {% endfor %}
     {% endfor %}
 {% endfor %}

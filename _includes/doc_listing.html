@@ -19,8 +19,15 @@
                 <ul>
                 {% for section in site.lua_doc_sections.utils %}
                     <li>
-                        <a href="/docs/lua#utils-{{ section }}"><code>{{ section }}</code></a>
+                        <a href="/docs/lua#utils-{{ section[0] }}"><code>{{ section[0] }}</code></a>
                     </li>
+                    <ul>
+                    {% for subsection in section[1] %}
+                        <li>
+                            <a href="/docs/lua#utils-{{ subsection }}"><code>{{ subsection }}</code></a>
+                        </li>
+                    {% endfor %}
+                    </ul>
                 {% endfor %}
                 </ul>
             </li>

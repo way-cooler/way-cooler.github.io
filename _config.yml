@@ -72,4 +72,4 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
-  - way-cooler
+  - way-cooler/

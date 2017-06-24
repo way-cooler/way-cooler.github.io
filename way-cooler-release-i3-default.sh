@@ -1,6 +1,6 @@
 #!/usr/bin/sh
 
-function cleanup() {
+function cleanup {
     rm -rf $TMP_DIR
     exit 1
 }

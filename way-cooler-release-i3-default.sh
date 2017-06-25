@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/bash
 
 function cleanup {
     rm -rf $TMP_DIR

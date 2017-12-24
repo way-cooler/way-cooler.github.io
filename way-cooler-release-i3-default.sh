@@ -6,14 +6,14 @@ function cleanup {
 }
 
 # VERSION NUMBERS
-WM_VERSION="v0.6.2"
-BG_VERSION="v0.2.1"
-GRAB_VERSION="v0.2.0"
-LOCK_VERSION="v0.1.0"
+WM_VERSION="v0.7.0"
+BG_VERSION="v0.3.0"
+GRAB_VERSION="v0.3.0"
+LOCK_VERSION="v0.2.1"
 
 TMP_DIR=/tmp/way-cooler
 WM_URL=https://github.com/way-cooler/way-cooler/releases/download/$WM_VERSION/way-cooler
-BG_URL=https://github.com/way-cooler/way-cooler-bg/releases/download/$BG_VERSION/way-cooler-bg
+BG_URL=https://github.com/way-cooler/way-cooler-bg/releases/download/$BG_VERSION/wc-bg
 GRAB_URL=https://github.com/way-cooler/way-cooler-grab/releases/download/$GRAB_VERSION/wc-grab
 LOCK_URL=https://github.com/way-cooler/way-cooler-lock/releases/download/$LOCK_VERSION/wc-lock
 LOCK_PAM_URL=https://github.com/way-cooler/way-cooler-lock/releases/download/$LOCK_VERSION/wc-lock-pam

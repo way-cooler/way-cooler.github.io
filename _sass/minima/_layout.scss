@@ -262,7 +262,7 @@
         box-sizing: border-box;
     }
 
-    h4 {
+    h4, h3, h2, h1 {
         font-weight: bold !important
     }
 
@@ -380,6 +380,12 @@
     margin-bottom: 1rem;
     font-weight: normal;
     color: black;
+    }
+    .main-content h2 {
+        font-size: 2rem;
+    }
+    .main-content h1 {
+        font-size: 3rem;
     }
     .main-content h3 {
         text-align: center;

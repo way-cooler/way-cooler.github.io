@@ -5,7 +5,7 @@ date: 2016-08-14
 categories: blog
 ---
 
-<section class="main-content">
+<section>
     <p>While designing <a href="https://github.com/Immington-Industries/way-cooler">Way Cooler</a>, it was decided early on that we wanted multiple different ways for the user to tile their windows. When you look around at all the <a href="http://dwm.suckless.org/">different</a> <a href="https://awesome.naquadah.org/">tiling</a> <a href="http://i3wm.org/">window</a> <a href="http://xmonad.org/">managers</a> for X, it becomes apparent that there is no one-size-fits-all method. One of the primary goals of Way Cooler is to be as customizable as possible, so we want the user to choose the method that works best for them.</p>
     <p>Since the window manager I'm most familiar and comfortable with is i3, I decided to implement that first. i3 manages the windows on the screen by constructing a <a href="http://i3wm.org/docs/userguide.html#_tree">virtual tree</a> that the user can manipulate by adding containers and switching how each container lays out its children. Unlike Awesome's static layout templates or Xmonad's non-structured horizontal/vertical/fullscreen tiling, i3 lets you construct a layout yourself. i3's commands are so simple, therefore it will be trivial to either augment them or strip them away completely when we offer more tiling options to the user.</p>
     <h4>Designing the data definition using smart pointers</h4>

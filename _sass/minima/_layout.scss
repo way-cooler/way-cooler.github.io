@@ -245,7 +245,16 @@
     .post-content {
         display: grid;
         .post-section {
-            display: inline-flex;
+            display: inherit;
+            .post-title-section {
+                display: inline-flex;
+            }
+            .post-spoiler-content {
+                border-style: groove;
+                border-color: whitesmoke;
+                margin-bottom: 2em;
+                background: lightgray;
+            }
         }
         h4 {
             padding-right: 5px;

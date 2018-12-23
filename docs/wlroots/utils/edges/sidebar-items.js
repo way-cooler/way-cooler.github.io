@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Edges","A bit flag representing which edge was affected by an event."]]});

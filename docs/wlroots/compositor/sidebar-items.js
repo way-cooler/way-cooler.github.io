@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["handle","Gets a handle to the compositor."],["terminate","Terminates the compositor and execute any user clean up code."]],"struct":[["Builder",""],["Compositor",""],["Handle",""]],"trait":[["Handler",""]]});

@@ -4,9 +4,6 @@ title: Documentation
 permalink: /docs/
 ---
 
-Way Cooler documentation is split into two modules. 
+Way Cooler documentation is currently incomplete. For user documentation, refer to the [awesome documentation](https://awesomewm.org/doc/).
 
-Lua documentation is for end users who want to customize their configuration file, or for users who want to write Lua scripts to extend Way Cooler. If you want to spawn a program, change your theme, customize your keybindings, or programmatically control any of those options this is what you want.
-
-D-Bus documentation is for client programmers who want to control the window manager with a separate program. If you want to be able to manipulate windows, workspaces, and the mouse then this is what you want.
-
+For wlroots-rs documentation [click here](/docs/wlroots/index.html).

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Cancel","Event that is triggered when a touch cancel event occurs."],["Down","Event that is triggered when a touch down event occurs."],["Motion","Event that is triggered when a touch motion event occurs."],["Up","Event that is triggered when a touch up event occurs."]]});

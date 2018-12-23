@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["IntersectionResult","Result of applying an intersection of two `Area`s."]],"struct":[["Area","Generic geometry-like struct. Container an origin (x, y) point and bounds (width, height)."],["Origin",""],["Size",""]]});

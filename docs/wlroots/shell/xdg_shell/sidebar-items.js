@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ShellState","A tagged enum of the different roles used by the xdg shell."]],"mod":[["event","Events for stable XDG shell"]],"struct":[["Popup",""],["Surface",""],["TopLevel",""]],"trait":[["Handler","Handles events from the client stable XDG shells."],["ManagerHandler",""]],"type":[["Handle",""]]});

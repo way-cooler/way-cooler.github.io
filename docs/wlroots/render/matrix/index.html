@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `matrix` mod in crate `wlroots`."><meta name="keywords" content="rust, rustlang, rust-lang, matrix"><title>wlroots::render::matrix - Rust</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Module matrix</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#constants">Constants</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../../index.html'>wlroots</a>::<wbr><a href='../index.html'>render</a></p><script>window.sidebarCurrent = {name: 'matrix', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../../../src/wlroots/render/matrix.rs.html#1-105' title='goto source code'>[src]</a></span><span class='in-band'>Module <a href='../../index.html'>wlroots</a>::<wbr><a href='../index.html'>render</a>::<wbr><a class="mod" href=''>matrix</a></span></h1><div class='docblock'><p>Matrix math is used to render things on a computer screen. This is common
+throughout computer graphics, for examples and primers on using matrix
+math to render things to screens please read an OpengGL tutorial.</p>
+<p>In wlroots we primarily use a 3x3 matrix of 32 bit floating point values to
+represent a 2D screen. We also provide basic helper functions to assist in
+transforming the matrices.</p>
+</div><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="constant" href="constant.IDENTITY.html"
+                                  title='constant wlroots::render::matrix::IDENTITY'>IDENTITY</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.multiply.html"
+                                  title='fn wlroots::render::matrix::multiply'>multiply</a></td>
+                           <td class='docblock-short'>
+                                <p>Multiply two matrices together.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.project_box.html"
+                                  title='fn wlroots::render::matrix::project_box'>project_box</a></td>
+                           <td class='docblock-short'>
+                                <p>Shortcut for the various matrix operations involved in projecting the
+specified wlr_box onto a given orthographic projection with a given
+rotation. The result can be applied to each coordinate of the box to
+get a new coordinate from [-1,1].</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.projection.html"
+                                  title='fn wlroots::render::matrix::projection'>projection</a></td>
+                           <td class='docblock-short'>
+                                <p>Create a 2D orthographic projection matrix of (width, height) with a
+specified <code>wl_output_transform</code></p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.rotate.html"
+                                  title='fn wlroots::render::matrix::rotate'>rotate</a></td>
+                           <td class='docblock-short'>
+                                <p>Rotate the matrix by some amount of radians.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.scale.html"
+                                  title='fn wlroots::render::matrix::scale'>scale</a></td>
+                           <td class='docblock-short'>
+                                <p>Scales the 2D matrix to a magnitude of (x, y).</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.transform.html"
+                                  title='fn wlroots::render::matrix::transform'>transform</a></td>
+                           <td class='docblock-short'>
+                                <p>Transform the matrix based on the given Wayland output transform mode.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.translate.html"
+                                  title='fn wlroots::render::matrix::translate'>translate</a></td>
+                           <td class='docblock-short'>
+                                <p>Translate the 2D matrix to a magnitude of (x, y).</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.transpose.html"
+                                  title='fn wlroots::render::matrix::transpose'>transpose</a></td>
+                           <td class='docblock-short'>
+                                <p>Flip the values over the diagonal of a matrix</p>
+
+                           </td>
+                       </tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../../";window.currentCrate = "wlroots";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script defer src="../../../search-index.js"></script></body></html>

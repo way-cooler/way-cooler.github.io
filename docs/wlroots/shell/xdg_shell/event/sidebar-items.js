@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Move","Event that triggers when the surface has been moved in coordinate space."],["Resize","Event that triggers when the suface has been resized."],["SetFullscreen","Event that is triggered when the surface toggles between being fullscreen or not."],["ShowWindowMenu","Event that is triggered when the surface shows the window menu."]]});

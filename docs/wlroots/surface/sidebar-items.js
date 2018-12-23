@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["InvalidState","Represents a change in the pending state."]],"mod":[["subsurface","TODO Documentation"]],"struct":[["State","Surface state as reported by wlroots."],["Surface","A Wayland object that represents the data that we display on the screen."]],"trait":[["Handler",""]],"type":[["Handle",""]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Hints","Hints provided by the XWayland client to aid in compositing."],["SizeHints","Hints provided by the XWayland client to aid in compositing specifically for placement."],["Surface","An Xwayland user interface component. It has an absolute position in layout-local coordinates."]],"trait":[["Handler",""]],"type":[["Handle",""]]});

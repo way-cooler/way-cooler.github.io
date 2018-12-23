@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Manager","Global for the data device manager global for a certain display."],["Offer","An offering of data"],["Source",""]]});

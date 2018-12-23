@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["wlr_button_state",""],["wlr_tablet_pad_ring_source",""],["wlr_tablet_pad_strip_source",""]],"struct":[["Button","Event that is triggered when a tablet pad button event occurs."],["Ring","Event that is triggered when a ring event occurs."],["Strip","Event that is triggered wen a strip event occurs"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Mode","Possible values to use in request_mode and the event mode."]],"struct":[["Manager",""]]});

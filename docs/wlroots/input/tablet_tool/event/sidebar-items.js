@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Axis","Event that is triggered when a tablet tool axis event occurs."],["Button","Event that is triggered when a tablet tool button event occurs."],["Proximity","Event that is triggered when a tablet tool proximity event occurs."],["Tip","Event that is triggered when a tablet tool tip event occurs."]]});

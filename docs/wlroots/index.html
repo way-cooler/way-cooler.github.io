@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `wlroots` crate."><meta name="keywords" content="rust, rustlang, rust-lang, wlroots"><title>wlroots - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate wlroots</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'wlroots', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/wlroots/lib.rs.html#1-50' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>wlroots</a></span></h1><div class='docblock'><p>This crate provides safe bindings to
+<a href="https://github.com/swaywm/wlroots">wlroots</a>.</p>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
+<table><tr><td><code>pub extern crate <a class="mod" href="../wlroots_sys/index.html" title="mod wlroots_sys">wlroots_sys</a>;</code></td></tr><tr><td><code>pub extern crate <a class="mod" href="../xkbcommon/index.html" title="mod xkbcommon">xkbcommon</a>;</code></td></tr><tr><td><code>pub use wlroots_dehandle::<a class="macro" href="../wlroots_dehandle/macro.wlroots_dehandle.html" title="macro wlroots_dehandle::wlroots_dehandle">wlroots_dehandle</a>;</code></td></tr><tr><td><code>pub use wlroots_sys::<a class="enum" href="../wlroots/enum.wl_shm_format.html" title="enum wlroots::wl_shm_format">wl_shm_format</a>::*;</code></td></tr><tr><td><code>pub use wlroots_sys::<a class="enum" href="../wlroots/enum.wlr_axis_orientation.html" title="enum wlroots::wlr_axis_orientation">wlr_axis_orientation</a>::*;</code></td></tr><tr><td><code>pub use wlroots_sys::<a class="enum" href="../wlroots/enum.wlr_axis_source.html" title="enum wlroots::wlr_axis_source">wlr_axis_source</a>::*;</code></td></tr><tr><td><code>pub use wlroots_sys::<a class="enum" href="../wlroots/input/tablet_pad/event/enum.wlr_button_state.html" title="enum wlroots::input::tablet_pad::event::wlr_button_state">wlr_button_state</a>::*;</code></td></tr><tr><td><code>pub use wlroots_sys::<a class="enum" href="../wlroots/enum.wlr_input_device_type.html" title="enum wlroots::wlr_input_device_type">wlr_input_device_type</a>::*;</code></td></tr><tr><td><code>pub use wlroots_sys::<a class="enum" href="../wlroots/input/keyboard/enum.wlr_key_state.html" title="enum wlroots::input::keyboard::wlr_key_state">wlr_key_state</a>::*;</code></td></tr><tr><td><code>pub use wlroots_sys::<a class="enum" href="../wlroots/enum.wlr_keyboard_modifier.html" title="enum wlroots::wlr_keyboard_modifier">wlr_keyboard_modifier</a>::*;</code></td></tr><tr><td><code>pub use wlroots_sys::<a class="enum" href="../wlroots/input/tablet_pad/event/enum.wlr_tablet_pad_ring_source.html" title="enum wlroots::input::tablet_pad::event::wlr_tablet_pad_ring_source">wlr_tablet_pad_ring_source</a>::*;</code></td></tr><tr><td><code>pub use wlroots_sys::<a class="enum" href="../wlroots/input/tablet_pad/event/enum.wlr_tablet_pad_strip_source.html" title="enum wlroots::input::tablet_pad::event::wlr_tablet_pad_strip_source">wlr_tablet_pad_strip_source</a>::*;</code></td></tr><tr><td><code>pub use wlroots_sys::<a class="enum" href="../wlroots/enum.wlr_tablet_tool_proximity_state.html" title="enum wlroots::wlr_tablet_tool_proximity_state">wlr_tablet_tool_proximity_state</a>::*;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="area/index.html"
+                                  title='mod wlroots::area'>area</a></td>
+                           <td class='docblock-short'>
+                                <p>Wrapper for the <code>wlr_box</code> type.
+Note that we renamed it to <code>Area</code> to avoid conflicts with Rust's Box.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="backend/index.html"
+                                  title='mod wlroots::backend'>backend</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="compositor/index.html"
+                                  title='mod wlroots::compositor'>compositor</a></td>
+                           <td class='docblock-short'>
+                                <p>Main entry point to the library.
+See examples for documentation on how to use this struct.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="cursor/index.html"
+                                  title='mod wlroots::cursor'>cursor</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="data_device/index.html"
+                                  title='mod wlroots::data_device'>data_device</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="extensions/index.html"
+                                  title='mod wlroots::extensions'>extensions</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="input/index.html"
+                                  title='mod wlroots::input'>input</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="output/index.html"
+                                  title='mod wlroots::output'>output</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="render/index.html"
+                                  title='mod wlroots::render'>render</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="seat/index.html"
+                                  title='mod wlroots::seat'>seat</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="shell/index.html"
+                                  title='mod wlroots::shell'>shell</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="surface/index.html"
+                                  title='mod wlroots::surface'>surface</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="utils/index.html"
+                                  title='mod wlroots::utils'>utils</a></td>
+                           <td class='docblock-short'>
+                                <p>Utilities for use within wlroots-rs that are not directly related to Wayland or compositors.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="mod" href="xwayland/index.html"
+                                  title='mod wlroots::xwayland'>xwayland</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="macro" href="macro.compositor_data.html"
+                                  title='macro wlroots::compositor_data'>compositor_data</a></td>
+                           <td class='docblock-short'>
+                                <p>Used to indicate what data is global compositor data.
+It will automatically implement the CompositorData trait for the struct,
+and also add a method to <code>Compositor</code> to unwrap the data from the fat
+pointer.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="macro" href="macro.with_handles.html"
+                                  title='macro wlroots::with_handles'>with_handles</a></td>
+                           <td class='docblock-short'>
+                                <p>A convenience macro designed for use with Handle types.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="macro" href="macro.wlr_log.html"
+                                  title='macro wlroots::wlr_log'>wlr_log</a></td>
+                           <td class='docblock-short'>
+                                <p>Logs a message using wlroots' logging capability.</p>
+
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.KeyboardModifiers.html"
+                                  title='struct wlroots::KeyboardModifiers'>KeyboardModifiers</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.TabletToolAxes.html"
+                                  title='enum wlroots::TabletToolAxes'>TabletToolAxes</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.wl_shm_format.html"
+                                  title='enum wlroots::wl_shm_format'>wl_shm_format</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.wlr_axis_orientation.html"
+                                  title='enum wlroots::wlr_axis_orientation'>wlr_axis_orientation</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.wlr_axis_source.html"
+                                  title='enum wlroots::wlr_axis_source'>wlr_axis_source</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.wlr_button_state.html"
+                                  title='enum wlroots::wlr_button_state'>wlr_button_state</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.wlr_input_device_type.html"
+                                  title='enum wlroots::wlr_input_device_type'>wlr_input_device_type</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.wlr_key_state.html"
+                                  title='enum wlroots::wlr_key_state'>wlr_key_state</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.wlr_keyboard_modifier.html"
+                                  title='enum wlroots::wlr_keyboard_modifier'>wlr_keyboard_modifier</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.wlr_tablet_pad_ring_source.html"
+                                  title='enum wlroots::wlr_tablet_pad_ring_source'>wlr_tablet_pad_ring_source</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.wlr_tablet_pad_strip_source.html"
+                                  title='enum wlroots::wlr_tablet_pad_strip_source'>wlr_tablet_pad_strip_source</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.wlr_tablet_tool_proximity_state.html"
+                                  title='enum wlroots::wlr_tablet_tool_proximity_state'>wlr_tablet_tool_proximity_state</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "wlroots";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>

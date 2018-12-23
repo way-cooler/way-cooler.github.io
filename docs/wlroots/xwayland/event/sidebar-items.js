@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Configure","Event for when XWayland surface needs to be configured."],["Move","Event for when an XWayland surface is moved."],["Resize","Event for when an XWayland surface is resized."]]});

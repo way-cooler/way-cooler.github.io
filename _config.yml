@@ -24,45 +24,6 @@ github_username:  Way-Cooler
 jsarr:
   - download.js
 
-lua_doc_sections: {
-    configuration: [
-        "programs",
-        "windows",
-        "mouse",
-    ], 
-    utils: {
-        program: [
-            "spawn",
-            "spawn_once",
-            "spawn_at_startup",
-            "spawn_startup_programs",
-            "terminate_startup_programs",
-            "restart_startup_programs"
-        ],
-    }
-}
-
-dbus_doc_sections: {
-    layout: [
-        "ActiveContainerId",
-        "ActiveWorkspace",
-        "CloseView",
-        "ContainerInActiveWorkspace",
-        "Debug",
-        "Focus",
-        "FocusDir",
-        "FullScreen",
-        "GrabAtCorner",
-        "MoveContainer",
-        "SendToWorkspace",
-        "SetPointerPos",
-        "SplitContainer",
-        "SwitchWorkspace",
-        "ToggleCardinalTiling",
-        "ToggleFloat",
-    ]
-}
-
 
 # Build settings
 markdown: kramdown

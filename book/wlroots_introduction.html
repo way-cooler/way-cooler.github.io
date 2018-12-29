@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Introduction to wlroots - </title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html" class="active">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title"></h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#introduction-to-wlroots" id="introduction-to-wlroots"><h1>Introduction to wlroots</h1></a>
+<a class="header" href="#what-is-a-compositor-framework" id="what-is-a-compositor-framework"><h2>What is a compositor framework?</h2></a>
+<p>Since Wayland is just a protocol, and a compositor has to do all the things the xserver used to do, a Wayland compositor needs to use more than just Wayland in order to be functional. For example it needs to somehow get access to a framebuffer in order to render clients.</p>
+<p>The reason it's in charge of everything is manifold:</p>
+<ol>
+<li>It means Wayland can be used in a non desktop setup, such on a phone or in an embedded device where a &quot;cursor&quot; and other such features may not make sense.</li>
+<li>By consolidating the jobs into one process it has the potential to be efficient because there's more information it can use to make a more informed decision.</li>
+<li>Wayland developers are more or less ex-XOrg developers who don't want it to become big, old, and slow like X11 is. By making libwayland itself simple and pushing most of the work to the compositors it will more likely survive the years intact.</li>
+</ol>
+<p>In order to implement all this additional functionality most compositors use a few other libraries. The important ones to know are:</p>
+<ul>
+<li>KMS/DRM (Kernal Mode Settings/ Direct Rendering Manager)
+<ul>
+<li>Interfaces with GPUs of modern video cards to render to screens.</li>
+</ul>
+</li>
+<li>libinput
+<ul>
+<li>A library for handling the hardware portions of keyboard, pointers, touch devices, etc. that make up Wayland seats.</li>
+</ul>
+</li>
+<li>XWayland
+<ul>
+<li>A compatibility layer that lets users run deprecated X11 apps in Wayland. This is optional but is generally used by all compositors.</li>
+</ul>
+</li>
+<li>Systemd
+<ul>
+<li>For handling user sessions. This is also optional but broadly supported since logind is standard in most Linux distributions.</li>
+</ul>
+</li>
+<li>xkbcommon
+<ul>
+<li>Handling keyboard descriptions and to process key events.</li>
+</ul>
+</li>
+</ul>
+<p>Not all compositors use frameworks, some of them just use Wayland and the other libraries directly. Mutter and KWin do not use frameworks. Sway and Way Cooler used to use wlc but they now use wlroots. Fireplace used to use wlc but they now use Smithay, a framework written completely in Rust.</p>
+<a class="header" href="#which-framework-will-this-guide-use" id="which-framework-will-this-guide-use"><h2>Which framework will this guide use?</h2></a>
+<p><a href="https://github.com/swaywm/wlroots">wlroots</a> is the compositor framework that will be used in this book to build a compositor.<sup>1</sup> As of this writing it is the most mature Wayland compositor framework. There are 3 known other compositor frameworks, but have various problems:</p>
+<ul>
+<li><a href="https://github.com/Cloudef/wlc">wlc</a>
+<ul>
+<li>Deprecated. It was found to abstract too much from the Wayland protocol, though it was immensely simpler than wlroots. The time measured to get a working compositor can be measured in hours instead of the expected couple of days or weeks it will take with wlroots. However even basic use cases, such as rendering borders around clients, is difficult to do well in wlc. Some use cases are outright impossible.</li>
+</ul>
+</li>
+<li><a href="https://smithay.github.io/">Smithay</a>
+<ul>
+<li>A framework written entirely in Rust. Like most things in Rust however it is unstable and attempting to rewrite the entire stack in Rust.</li>
+</ul>
+</li>
+<li><a href="https://gitlab.freedesktop.org/wayland/weston/tree/master/libweston">libweston</a>
+<ul>
+<li>A library based on the reference Weston compositor. Essentially you're just getting a new flavor of Weston instead of your own compositor, which makes it suffer from the same problems as wlc. As of this writing it's also largely unused outside of Weston.</li>
+</ul>
+</li>
+</ul>
+<p>Here is the elevator pitch for wlroots, taken straight from their README:</p>
+<blockquote>
+<p>Pluggable, composable, unopinionated modules for building a Wayland compositor; or about 50,000 lines of code you were going to write anyway.</p>
+<ul>
+<li>wlroots provides backends that abstract the underlying display and input hardware, including KMS/DRM, libinput, Wayland, X11, and headless backends, plus any custom backends you choose to write, which can all be created or destroyed at runtime and used in concert with each other.</li>
+<li>wlroots provides unopinionated, mostly standalone implementations of many Wayland interfaces, both from wayland.xml and various protocol extensions. We also promote the standardization of portable extensions across many compositors.</li>
+<li>wlroots provides several powerful, standalone, and optional tools that implement components common to many compositors, such as the arrangement of outputs in physical space.</li>
+<li>wlroots provides an Xwayland abstraction that allows you to have excellent Xwayland support without worrying about writing your own X11 window manager on top of writing your compositor.</li>
+<li>wlroots provides a renderer abstraction that simple compositors can use to avoid writing GL code directly, but which steps out of the way when your needs demand custom rendering code.</li>
+</ul>
+</blockquote>
+<hr />
+<p><sup>1</sup> It is written in C, but there are <a href="https://github.com/swaywm/wlroots-rs">safe Rust bindings</a> written by me which is what will be used. The only thing the Rust library adds is memory safety and some more structure to the library. All the real features are implemented in wlroots.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="wayland_introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="hello_world.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="wayland_introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="hello_world.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

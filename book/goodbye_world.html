@@ -1,0 +1,344 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Goodbye World - </title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html" class="active"><strong aria-hidden="true">2.</strong> Goodbye World</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title"></h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#goodbye-world" id="goodbye-world"><h1>Goodbye World</h1></a>
+<p>The compositor from the previous section has a bug: it can't be exited from if it is started in DRM. This is a pretty serious bug, one that will be addressed in two ways in this section.</p>
+<p>The first is the most extreme, and easiest to implement, option: adding a shut down key sequence. The compositor will be configured so if the user presses <code>Ctrl+Shift+Escape</code> it will gracefully terminate with a zero exit status. This will be useful in debugging the compositor as it makes it easy to shut down even in DRM.<sup>1</sup></p>
+<p>The second escape access is a feature that is often taken for granted: the ability to switch TTYs. The standard <code>Ctrl+Alt+F#</code> sequence will be implemented to switch TTYs when the compositor is running on DRM. When it's running on another backend it will simply ignore that (since it won't have the proper access controls to do the context switch).</p>
+<p>This section will primarily concern itself with <a href="http://way-cooler.org/docs/wlroots/input/keyboard/trait.Handler.html">setting up handlers</a> for the first time, handling <a href="http://way-cooler.org/docs/wlroots/input/keyboard/event/struct.Key.html">keyboard input</a>, and <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html">learning to use wlroots-rs handles</a>.</p>
+<a class="header" href="#shutting-down-the-compositor-gracefully" id="shutting-down-the-compositor-gracefully"><h1>Shutting down the compositor gracefully</h1></a>
+<p>Before the compositor can begin listening for keyboard input it needs to listen for keyboards.</p>
+<p>For each resource type that can be created there is a manager module that provides a builder and some function signatures for the compositor writer to describe how a resource should be managed. <a href="http://way-cooler.org/docs/wlroots/input/manager/index.html">Here is the input device resource manager module</a>.</p>
+<p>To specify that a keyboard should be managed by the compositor a function needs to be defined <a href="http://way-cooler.org/docs/wlroots/input/manager/type.KeyboardAdded.html">matching the keyboard resource manager signature</a>. This function will be later called by wlroots when a keyboard is announced to the compositor through libinput.</p>
+<p>Once the function is defined with the necessary signature it needs to be put into the resource builder and the resource builder is passed to the <code>compositor::Builder</code>. <a href="http://way-cooler.org/docs/wlroots/input/manager/struct.Builder.html">Here is the input builder</a> and <a href="http://way-cooler.org/docs/wlroots/compositor/struct.Builder.html#method.input_manager">here is where the <code>compositor::Builder</code> is given an input builder</a>.</p>
+<a class="header" href="#a-minimal-keyboard-handler" id="a-minimal-keyboard-handler"><h2>A Minimal Keyboard Handler</h2></a>
+<p>I will now do the bare minimum to implement the signature needed for a keyboard to be constructed:</p>
+<pre><pre class="playpen"><code class="language-rust">fn main() {
+    init_logging(WLR_DEBUG, None);
+    let input_builder = input::manager::Builder::default()
+        .keyboard_added(keyboard_added);
+    compositor::Builder::new()
+        .input_manager(input_builder)
+        .build_auto(())
+        .run()
+}
+
+fn keyboard_added(_compositor_handle: compositor::Handle,
+                  _keyboard_handle: keyboard::Handle)
+                  -&gt; Option&lt;Box&lt;keyboard::Handler&gt;&gt; {
+    None
+}
+</code></pre></pre>
+<p>With the provided implementation whenever a keyboard is announced wlroots-rs will call <code>keyboard_added</code>. Since it unconditionally returns <code>None</code> it will not allocate anything for they keyboard resource and it will simple be dropped.</p>
+<p>In order to hang on to the resource a handler must be defined and allocated using <code>Box</code> to make a trait object. The handler defines how to deal with event the resource can trigger, including <a href="http://way-cooler.org/docs/wlroots/input/keyboard/trait.Handler.html#method.on_key">when a key is pressed</a>.</p>
+<p>A trait needs a structure to implement on so a <a href="https://doc.rust-lang.org/nomicon/exotic-sizes.html">zero-sized</a> is used here so there's no overhead: <sup>2</sup></p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn keyboard_added(_compositor_handle: compositor::Handle,
+                  _keyboard_handle: keyboard::Handle)
+                  -&gt; Option&lt;Box&lt;keyboard::Handler&gt;&gt; {
+    Some(Box::new(KeyboardHandler))
+}
+
+struct KeyboardHandler;
+
+impl keyboard::Handler for KeyboardHandler {
+    // All handler methods have a default implementation that does nothing
+    // So because no methods are define here, every event on the keyboard
+    // is ignored.
+}
+#}</code></pre></pre>
+<a class="header" href="#implementing-shutdown" id="implementing-shutdown"><h2>Implementing Shutdown</h2></a>
+<p>When a key is pressed <a href="http://way-cooler.org/docs/wlroots/input/keyboard/trait.Handler.html#method.on_key">this method</a> receives <a href="http://way-cooler.org/docs/wlroots/input/keyboard/event/struct.Key.html">the event</a>. The key event has a couple methods but the <a href="http://way-cooler.org/docs/wlroots/input/keyboard/event/struct.Key.html#method.pressed_keys">most important one is <code>pressed_keys</code></a>. It will provide all the keys as seen by xkb that were pressed when the event fired.</p>
+<p>Using the keysyms module from the reexported <a href="https://crates.io/crates/xkbcommon">xkbcommon crate</a> the list of keys can be iterated over and pattern matched.</p>
+<p>The last piece of the puzzle is stopping the compositor. Call <a href="http://way-cooler.org/docs/wlroots/compositor/fn.terminate.html"><code>terminate</code> to stop</a> the compositor. It can be called at any time and will gracefully kill clients, destroy resource managers, and then wind back up the stack to where <code>run</code> was called.</p>
+<p>Here is the complete code for a compositor that will be able to close itself if there is a keyboard with an escape key:</p>
+<pre><pre class="playpen"><code class="language-rust">extern crate wlroots;
+
+use wlroots::{compositor,
+              input::{self, keyboard},
+              utils::log::{WLR_DEBUG, init_logging},
+              xkbcommon::xkb::keysyms};
+
+fn main() {
+    init_logging(WLR_DEBUG, None);
+    let input_builder = input::manager::Builder::default()
+        .keyboard_added(keyboard_added);
+    compositor::Builder::new()
+        .input_manager(input_builder)
+        .build_auto(())
+        .run()
+}
+
+fn keyboard_added(_compositor_handle: compositor::Handle,
+                  _keyboard_handle: keyboard::Handle)
+                  -&gt; Option&lt;Box&lt;keyboard::Handler&gt;&gt; {
+    Some(Box::new(KeyboardHandler))
+}
+
+struct KeyboardHandler;
+
+impl keyboard::Handler for KeyboardHandler {
+    fn on_key(&amp;mut self,
+              compositor_handle: compositor::Handle,
+              _keyboard_handle: keyboard::Handle,
+              key_event: &amp;keyboard::event::Key) {
+        for key in key_event.pressed_keys() {
+            match key {
+                keysyms::KEY_Escape =&gt; wlroots::compositor::terminate(),
+                _ =&gt; { /* Do nothing */ }
+            }
+        }
+    }
+}
+</code></pre></pre>
+<a class="header" href="#switching-ttys" id="switching-ttys"><h1>Switching TTYs</h1></a>
+<p>Implementing the ability to switch TTYs is not much more difficult <a href="http://way-cooler.org/docs/wlroots/backend/struct.Session.html#method.change_vt">once the relevant function is located on the <code>Session</code> struct</a>. However getting to that struct from the callback requires explaining wlroot-rs handles.</p>
+<blockquote>
+<a class="header" href="#handles-in-wlroots-rs" id="handles-in-wlroots-rs"><h1>Handles in wlroots-rs</h1></a>
+<p>Handles represent the wlroots-rs solution to the complicated lifetimes of wlroots resources.</p>
+<p>In Rust normally you can either own a value or borrow it for some lifetime. However, you can't
+&quot;own&quot; a keyboard because you don't control its lifetime. At any point, for example, the keyboard
+could be yanked out by the user and then it will need to be cleaned up.</p>
+<p>You also can't have these be defined via lifetimes on borrows because lifetimes behave like a
+compile-time read-write lock on data. That does mean there can have a callback that takes a borrow, for example:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// Callback for when a key is pressed
+fn on_key(keyboard: &amp;Keyboard) {
+    // A Keyboard will be valid here because wlroots is single threaded.
+}
+#}</code></pre></pre>
+<p>but now that resource can't escape these limited callbacks. That's unfortunate because you want to use the resources
+outside these limited scopes.</p>
+<p>To solve this a <code>Handle</code> is used to refer indirectly to resources. Handles are essentially thin wrappers around
+<a href="https://doc.rust-lang.org/std/rc/struct.Weak.html"><code>Weak</code> smart pointers</a>. They can only be accessed in
+callbacks by calling <code>run</code> on them, which performs additional safety checks to ensure the <code>Handle</code> is valid.</p>
+<p>Please read <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html">the handle documentation in order to better understand Handles</a>.</p>
+</blockquote>
+<p>A <code>Session</code> is <a href="http://way-cooler.org/docs/wlroots/backend/enum.Backend.html#method.get_session">obtained from a <code>Backend</code></a>. A <code>Backend</code> can be <a href="http://way-cooler.org/docs/wlroots/compositor/struct.Compositor.html#method.backend">obtained from a <code>&amp;Compositor</code></a>. To get a reference to the <code>Compositor</code> the <code>compositor_handle</code> must be upgraded.</p>
+<p>When you upgrade a handle there's a change it can fail <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html#method.run">according to its signature</a>. The <a href="http://way-cooler.org/docs/wlroots/utils/enum.HandleErr.html">possible error values</a> indicate the two requirements for upgrading a handle:</p>
+<ol>
+<li>Two handles to the same resource can not be upgraded at the same time. If this were allowed there could be two mutable references to the same resource, which is against Rust's memory model.</li>
+<li>If the resource behind the handle has been destroyed then the handle can never be upgraded again.<sup>3</sup></li>
+</ol>
+<p>Because these errors should not occur for the compositor handle, it is sufficient to simply <code>unwrap</code> the result here:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+impl keyboard::Handler for KeyboardHandler {
+    fn on_key(&amp;mut self,
+              compositor_handle: compositor::Handle,
+              _keyboard_handle: keyboard::Handle,
+              key_event: &amp;keyboard::event::Key) {
+        for key in key_event.pressed_keys() {
+            match key {
+                keysyms::KEY_Escape =&gt; wlroots::compositor::terminate(),
+                keysyms::KEY_XF86Switch_VT_1 ..= keysyms::KEY_XF86Switch_VT_12 =&gt; {
+                    compositor_handle.run(|compositor| {
+                        let backend = compositor.backend_mut();
+                        if let Some(mut session) = backend.get_session() {
+                            session.change_vt(key - keysyms::KEY_XF86Switch_VT_1 + 1);
+                        }
+                    }).unwrap();
+                }
+                _ =&gt; { /* Do nothing */ }
+            }
+        }
+    }
+}
+#}</code></pre></pre>
+<hr />
+<p><sup>1</sup> Huge caveat to this: if the system is deadlocked, such as by an innocuous <code>loop {}</code>, then the compositor can no longer process input including the escape sequence. Either test all of your features in a nested instance (where input can still be processed by the parent system) or have <code>ssh</code> as a backup to <code>pkill</code> the process.</p>
+<p><sup>2</sup> There's still an allocation, but it will allocate <code>sizeof(data_struct) + sizeof(vtable) + sizeof(internal_wayland_listeners)</code>. Even though the size of the data struct is zero there is a non zero cost for the internal wayland listeners and vtable (which allows you to have implementations for the same trait implemented differently on different structs). This is a price you must always pay. <a href="https://github.com/swaywm/wlroots-rs/issues/238">In the future it might be possible to specify static listeners</a>.</p>
+<p><sup>3</sup> In this case the <code>Compositor</code> lives for the life of the compositor, so it will never be <code>AlreadyDropped</code>. This is not the case for other resources, such as <code>Keyboard</code>s.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="hello_world_exercises.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="hello_world_exercises.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

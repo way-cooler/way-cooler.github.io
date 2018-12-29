@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Introduction - </title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html" class="active">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title"></h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#how-to-make-a-wayland-compositor-in-rust" id="how-to-make-a-wayland-compositor-in-rust"><h1>How to Make a Wayland Compositor (in Rust)</h1></a>
+<a class="header" href="#what-is-wayland" id="what-is-wayland"><h2>What is Wayland?</h2></a>
+<p>Wayland is the replacement for the X Window System, colloquially known as X11.</p>
+<p>Similar to how the most popular implementation of X11 is XOrg the most popular version of Wayland is the reference implementation. Other versions exist, including one <a href="https://github.com/Smithay/wayland-rs">written in Rust</a>.</p>
+<p>It's highly suggested you read everything <a href="https://wayland.freedesktop.org/">on the official Wayland site</a>, specifically the FAQ, architecture page, and the documentation. You can also just read along here and consult that site when you come across a term or process you don't understand.</p>
+<a class="header" href="#what-is-a-wayland-compositor" id="what-is-a-wayland-compositor"><h2>What is a Wayland Compositor?</h2></a>
+<p>If there's only one thing you learn from this book, it should be this:</p>
+<p><strong>Wayland is not a compositor</strong></p>
+<p><strong>Wayland is not a window manager</strong></p>
+<p><strong>Wayland is not a display server</strong></p>
+<p><strong>Wayland is a <em>protocol</em> for clients and compositors to speak to each other</strong></p>
+<p><a href="https://wayland.freedesktop.org/architecture.html">This is required reading before you proceed.</a> (feel free to ignore the hardware and rendering sections, focus on the diagrams).</p>
+<p>In X11 there are two main components that are normally used to make a functioning system: the xserver and a window manager (which is just a client to the xserver). Technically all you need is the xserver, but the window manager helps make it usable. Most variations of X11 systems are simply swapping out what the window manager is. For example, Gnome, KDE, i3, and AwesomeWM are all examples of very different ways to build a functioning X11 system. Across all of these, they generally will use the same xserver.</p>
+<p>A Wayland compositor is like a window manager and the xserver bundled into one. Like in X11 it is in charge of putting other windows in their proper place, but unlike X11 <em>only</em> the compositor has the power to do this. In X11 a window manager is no more privileged than any other client. In Wayland the compositor is the master and the clients are the slaves.</p>
+<p>Here is a list of compositors that will be referenced later in this book:</p>
+<ul>
+<li><a href="http://way-cooler.org">Way Cooler</a>
+<ul>
+<li>Written by me, Preston Carpenter. It was the first Wayland compositor written in Rust.</li>
+</ul>
+</li>
+<li><a href="https://github.com/Drakulix/fireplace">Fireplace</a>
+<ul>
+<li>The second Wayland compositor written in Rust, it's goal is to be written completely in Rust including the Wayland implementation.</li>
+</ul>
+</li>
+<li><a href="https://swaywm.org/">Sway</a>
+<ul>
+<li>A clone of i3 by sircmpwn, the first popular tiling Wayland compositor. Because of Sway wlroots was made.</li>
+</ul>
+</li>
+<li><a href="https://userbase.kde.org/KWin">KWin</a>
+<ul>
+<li>The KDE Wayland compositor, is the direct continuation of the X11 Plasma desktop (which is deprecated).</li>
+</ul>
+</li>
+<li><a href="https://gitlab.gnome.org/GNOME/mutter">Mutter</a>
+<ul>
+<li>The Gnome Wayland compositor, is the direct continuation of the X11 Gnome desktop (which is deprecated).</li>
+</ul>
+</li>
+</ul>
+<p>These compositors will be mentioned either because I know them well enough to draw experience and stories from in order to help educate you (such as in Way Cooler's case), because they are doing something unique (in Fireplace's case) or because they made meaningful or politically significant decisions that have impacted the ecosystem (Sway, Mutter, and KWin).</p>
+<a class="header" href="#prerequisites-to-reading-this-book" id="prerequisites-to-reading-this-book"><h2>Prerequisites to reading this book</h2></a>
+<p>You should know how to program in Rust. You should have the latest stable version of Rust, any edition.</p>
+<p>You should also be able to read C. Even though there will be no C in this book most of the Wayland ecosystem, including the reference implementation and wlroots (the framework we will be using), is written in C.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="wlroots_introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a href="wlroots_introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

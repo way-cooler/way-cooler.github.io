@@ -1,0 +1,668 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title></title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title"></h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#how-to-make-a-wayland-compositor-in-rust" id="how-to-make-a-wayland-compositor-in-rust"><h1>How to Make a Wayland Compositor (in Rust)</h1></a>
+<a class="header" href="#what-is-wayland" id="what-is-wayland"><h2>What is Wayland?</h2></a>
+<p>Wayland is the replacement for the X Window System, colloquially known as X11.</p>
+<p>Similar to how the most popular implementation of X11 is XOrg the most popular version of Wayland is the reference implementation. Other versions exist, including one <a href="https://github.com/Smithay/wayland-rs">written in Rust</a>.</p>
+<p>It's highly suggested you read everything <a href="https://wayland.freedesktop.org/">on the official Wayland site</a>, specifically the FAQ, architecture page, and the documentation. You can also just read along here and consult that site when you come across a term or process you don't understand.</p>
+<a class="header" href="#what-is-a-wayland-compositor" id="what-is-a-wayland-compositor"><h2>What is a Wayland Compositor?</h2></a>
+<p>If there's only one thing you learn from this book, it should be this:</p>
+<p><strong>Wayland is not a compositor</strong></p>
+<p><strong>Wayland is not a window manager</strong></p>
+<p><strong>Wayland is not a display server</strong></p>
+<p><strong>Wayland is a <em>protocol</em> for clients and compositors to speak to each other</strong></p>
+<p><a href="https://wayland.freedesktop.org/architecture.html">This is required reading before you proceed.</a> (feel free to ignore the hardware and rendering sections, focus on the diagrams).</p>
+<p>In X11 there are two main components that are normally used to make a functioning system: the xserver and a window manager (which is just a client to the xserver). Technically all you need is the xserver, but the window manager helps make it usable. Most variations of X11 systems are simply swapping out what the window manager is. For example, Gnome, KDE, i3, and AwesomeWM are all examples of very different ways to build a functioning X11 system. Across all of these, they generally will use the same xserver.</p>
+<p>A Wayland compositor is like a window manager and the xserver bundled into one. Like in X11 it is in charge of putting other windows in their proper place, but unlike X11 <em>only</em> the compositor has the power to do this. In X11 a window manager is no more privileged than any other client. In Wayland the compositor is the master and the clients are the slaves.</p>
+<p>Here is a list of compositors that will be referenced later in this book:</p>
+<ul>
+<li><a href="http://way-cooler.org">Way Cooler</a>
+<ul>
+<li>Written by me, Preston Carpenter. It was the first Wayland compositor written in Rust.</li>
+</ul>
+</li>
+<li><a href="https://github.com/Drakulix/fireplace">Fireplace</a>
+<ul>
+<li>The second Wayland compositor written in Rust, it's goal is to be written completely in Rust including the Wayland implementation.</li>
+</ul>
+</li>
+<li><a href="https://swaywm.org/">Sway</a>
+<ul>
+<li>A clone of i3 by sircmpwn, the first popular tiling Wayland compositor. Because of Sway wlroots was made.</li>
+</ul>
+</li>
+<li><a href="https://userbase.kde.org/KWin">KWin</a>
+<ul>
+<li>The KDE Wayland compositor, is the direct continuation of the X11 Plasma desktop (which is deprecated).</li>
+</ul>
+</li>
+<li><a href="https://gitlab.gnome.org/GNOME/mutter">Mutter</a>
+<ul>
+<li>The Gnome Wayland compositor, is the direct continuation of the X11 Gnome desktop (which is deprecated).</li>
+</ul>
+</li>
+</ul>
+<p>These compositors will be mentioned either because I know them well enough to draw experience and stories from in order to help educate you (such as in Way Cooler's case), because they are doing something unique (in Fireplace's case) or because they made meaningful or politically significant decisions that have impacted the ecosystem (Sway, Mutter, and KWin).</p>
+<a class="header" href="#prerequisites-to-reading-this-book" id="prerequisites-to-reading-this-book"><h2>Prerequisites to reading this book</h2></a>
+<p>You should know how to program in Rust. You should have the latest stable version of Rust, any edition.</p>
+<p>You should also be able to read C. Even though there will be no C in this book most of the Wayland ecosystem, including the reference implementation and wlroots (the framework we will be using), is written in C.</p>
+<a class="header" href="#introduction-to-wlroots" id="introduction-to-wlroots"><h1>Introduction to wlroots</h1></a>
+<a class="header" href="#what-is-a-compositor-framework" id="what-is-a-compositor-framework"><h2>What is a compositor framework?</h2></a>
+<p>Since Wayland is just a protocol, and a compositor has to do all the things the xserver used to do, a Wayland compositor needs to use more than just Wayland in order to be functional. For example it needs to somehow get access to a framebuffer in order to render clients.</p>
+<p>The reason it's in charge of everything is manifold:</p>
+<ol>
+<li>It means Wayland can be used in a non desktop setup, such on a phone or in an embedded device where a &quot;cursor&quot; and other such features may not make sense.</li>
+<li>By consolidating the jobs into one process it has the potential to be efficient because there's more information it can use to make a more informed decision.</li>
+<li>Wayland developers are more or less ex-XOrg developers who don't want it to become big, old, and slow like X11 is. By making libwayland itself simple and pushing most of the work to the compositors it will more likely survive the years intact.</li>
+</ol>
+<p>In order to implement all this additional functionality most compositors use a few other libraries. The important ones to know are:</p>
+<ul>
+<li>KMS/DRM (Kernal Mode Settings/ Direct Rendering Manager)
+<ul>
+<li>Interfaces with GPUs of modern video cards to render to screens.</li>
+</ul>
+</li>
+<li>libinput
+<ul>
+<li>A library for handling the hardware portions of keyboard, pointers, touch devices, etc. that make up Wayland seats.</li>
+</ul>
+</li>
+<li>XWayland
+<ul>
+<li>A compatibility layer that lets users run deprecated X11 apps in Wayland. This is optional but is generally used by all compositors.</li>
+</ul>
+</li>
+<li>Systemd
+<ul>
+<li>For handling user sessions. This is also optional but broadly supported since logind is standard in most Linux distributions.</li>
+</ul>
+</li>
+<li>xkbcommon
+<ul>
+<li>Handling keyboard descriptions and to process key events.</li>
+</ul>
+</li>
+</ul>
+<p>Not all compositors use frameworks, some of them just use Wayland and the other libraries directly. Mutter and KWin do not use frameworks. Sway and Way Cooler used to use wlc but they now use wlroots. Fireplace used to use wlc but they now use Smithay, a framework written completely in Rust.</p>
+<a class="header" href="#which-framework-will-this-guide-use" id="which-framework-will-this-guide-use"><h2>Which framework will this guide use?</h2></a>
+<p><a href="https://github.com/swaywm/wlroots">wlroots</a> is the compositor framework that will be used in this book to build a compositor.<sup>1</sup> As of this writing it is the most mature Wayland compositor framework. There are 3 known other compositor frameworks, but have various problems:</p>
+<ul>
+<li><a href="https://github.com/Cloudef/wlc">wlc</a>
+<ul>
+<li>Deprecated. It was found to abstract too much from the Wayland protocol, though it was immensely simpler than wlroots. The time measured to get a working compositor can be measured in hours instead of the expected couple of days or weeks it will take with wlroots. However even basic use cases, such as rendering borders around clients, is difficult to do well in wlc. Some use cases are outright impossible.</li>
+</ul>
+</li>
+<li><a href="https://smithay.github.io/">Smithay</a>
+<ul>
+<li>A framework written entirely in Rust. Like most things in Rust however it is unstable and attempting to rewrite the entire stack in Rust.</li>
+</ul>
+</li>
+<li><a href="https://gitlab.freedesktop.org/wayland/weston/tree/master/libweston">libweston</a>
+<ul>
+<li>A library based on the reference Weston compositor. Essentially you're just getting a new flavor of Weston instead of your own compositor, which makes it suffer from the same problems as wlc. As of this writing it's also largely unused outside of Weston.</li>
+</ul>
+</li>
+</ul>
+<p>Here is the elevator pitch for wlroots, taken straight from their README:</p>
+<blockquote>
+<p>Pluggable, composable, unopinionated modules for building a Wayland compositor; or about 50,000 lines of code you were going to write anyway.</p>
+<ul>
+<li>wlroots provides backends that abstract the underlying display and input hardware, including KMS/DRM, libinput, Wayland, X11, and headless backends, plus any custom backends you choose to write, which can all be created or destroyed at runtime and used in concert with each other.</li>
+<li>wlroots provides unopinionated, mostly standalone implementations of many Wayland interfaces, both from wayland.xml and various protocol extensions. We also promote the standardization of portable extensions across many compositors.</li>
+<li>wlroots provides several powerful, standalone, and optional tools that implement components common to many compositors, such as the arrangement of outputs in physical space.</li>
+<li>wlroots provides an Xwayland abstraction that allows you to have excellent Xwayland support without worrying about writing your own X11 window manager on top of writing your compositor.</li>
+<li>wlroots provides a renderer abstraction that simple compositors can use to avoid writing GL code directly, but which steps out of the way when your needs demand custom rendering code.</li>
+</ul>
+</blockquote>
+<hr />
+<p><sup>1</sup> It is written in C, but there are <a href="https://github.com/swaywm/wlroots-rs">safe Rust bindings</a> written by me which is what will be used. The only thing the Rust library adds is memory safety and some more structure to the library. All the real features are implemented in wlroots.</p>
+<a class="header" href="#hello-world" id="hello-world"><h1>Hello World</h1></a>
+<p>Each chapter's code contents will have its own folder with a name prefixed by the chapter number. For example, this chapter's code is stored in <code>1-hello-world/</code>. The code can be found <a href="https://github.com/swaywm/wlroots-rs/tree/book/how-to-make-a-wayland-compositor/src/">here</a>.</p>
+<p>The only dependency used, apart from the standard library, will be wlroots. A more useful compositor will want to use other libraries, but it is not done here in order to avoid choosing favorites while also being self contained and complete.</p>
+<blockquote>
+<p>An important note to copy pasters: This document as well as the example code base is under the CC0 license.</p>
+<p>So copy and paste liberally, you can use this code as a jumping off point.</p>
+<p><strong>This does <em>not</em> apply to wlroots-rs or wlroots, both of which are under the MIT license.</strong></p>
+</blockquote>
+<a class="header" href="#boring-setup" id="boring-setup"><h2>Boring setup</h2></a>
+<p>wlroots-rs is in crates.io. If you want to install it, simply add this to your Cargo.toml:</p>
+<pre><code class="language-toml">[dependencies]
+wlroots = {version = &quot;0.2&quot;, features = [&quot;unstable&quot;, &quot;static&quot;]}
+</code></pre>
+<p>The <code>&quot;unstable&quot;</code> feature flag enables the wlroots features whose API hasn't stabilized yet. For now, this is necessary to build a compositor. In the future this restriction will be gradually lifted as the library matures.</p>
+<p>The <code>&quot;static&quot;</code> feature flag statically links the wlroots library to the binary. This is optional, but encouraged since there's no stable ABI guarantee and it makes it easier to distribute the compositor to others.</p>
+<p>Because the library is changing constantly however, it is suggested you add it as a git submodule to your project instead of using crates.io.</p>
+<a class="header" href="#a-minimal-compositor" id="a-minimal-compositor"><h2>A minimal compositor</h2></a>
+<p>Here is the smallest, simplest compositor you can make with wlroots:</p>
+<pre><pre class="playpen"><code class="language-rust">extern crate wlroots;
+
+use wlroots::{compositor, utils::log::{WLR_DEBUG, init_logging}};
+
+fn main() {
+    init_logging(WLR_DEBUG, None);
+    compositor::Builder::new().build_auto(()).run()
+}
+</code></pre></pre>
+<p>This compositor is useless. In fact, it's dangerously useless. However it's also very instructive considering how short it is.</p>
+<p>You can compile and run<sup>1</sup> the above in any existing X11 window manager or Wayland compositor and it will run in a nested window.<sup>2</sup> However if you run it in a separate TTY it will use the DRM backend. This is usually the backend that will be used when you're not testing the compositor. If you run this code on DRM, you can't escape the compositor. If you do this you will need to reboot to escape.</p>
+<p>Because no callbacks were set up for the events the compositor will just keep running forever doing nothing. You can't even switch TTYs because that's a feature that the compositor needs to implement itself.</p>
+<p>This example is a little silly, but it highlights just how much needs to be implemented -- our compositor can't even shut itself off.</p>
+<hr />
+<p><sup>1</sup> If you are running on a system with systemd and have the feature enabled (it is by default) it should &quot;just work&quot;. If not, you'll need set the setuid bit on the binary with <code>chmod u+s</code>.</p>
+<p><sup>2</sup> This is a wlroots feature that is built into the <code>build_auto</code> function. It is very useful for debugging.</p>
+<a class="header" href="#analyzing-the-code" id="analyzing-the-code"><h1>Analyzing the code</h1></a>
+<p>After explaining what each change gives us, I'll then explain what each line of code does.</p>
+<p>At the end of each chapter there will be a list of suggestions and challenges which I suggest you at least read over if not try. They exist to encourage you to read through the <a href="http://way-cooler.org/docs/wlroots/index.html">wlroots-rs documentation</a> and <a href="https://wayland.freedesktop.org/docs/html/">Wayland documentation</a> in order to better familiarize yourself.</p>
+<a class="header" href="#logging-setup" id="logging-setup"><h2>Logging setup</h2></a>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    init_logging(WLR_DEBUG, None);
+#}</code></pre></pre>
+<p>This line is not strictly necessary for the compositor to run. wlroots (and wlroots-rs) prints a log message each time something interesting happens which is useful for debugging. In general, you should always have this line in your compositor.</p>
+<p>The first parameter is the minimum level that is logged. The second parameter is an optional callback that will be called each time a message is logged.</p>
+<p>You can log a message using this system by using the <code>wlr_log!</code> macro<sup>1</sup>. Here is an example:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+// It has the same syntax as println! or format!
+wlr_log!(WLR_DEBUG, &quot;This is an example {:?}&quot;, some_struct)
+#}</code></pre></pre>
+<p>The first parameter is the log level you want to log at. Any arguments after that are passed to <code>format!</code> with the format string being the second argument.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+    compositor::Builder::new().build_auto(()).run()
+#}</code></pre></pre>
+<p>This is the real meat of the program.</p>
+<p>This creates a builder for a <code>Compositor</code>. There can only be one <code>Compositor</code> object per process<sup>2</sup>. The builder is how Wayland globals and their callbacks are set up.</p>
+<p>In this case no callbacks are set up the <code>Compositor</code> is just immediately built. When you build the compositor, just like you build any object in wlroots-rs, you need to give it user state. In this case, there is no state to store so you can just pass the unit type <code>()</code>.</p>
+<p>Once the <code>Compositor</code> is set up then <code>run</code> can be called. This will put it in the main Wayland event loop listening for events and dispatching to the callbacks. It will keep running until <code>wlroots::terminate</code> is called. Since this is never call it in this compositor it won't happen until it's kill it via a signal.</p>
+<hr />
+<p><sup>1</sup> Don't forget to import macros by prepending <code>#[macro_use]</code> to <code>extern crate wlroots</code>.</p>
+<p><sup>2</sup> wlroots-rs is not designed to be thread safe with its objects. Most objects are <code>!Send</code> and <code>!Sync</code>.</p>
+<a class="header" href="#analyzing-the-wayland-protocol" id="analyzing-the-wayland-protocol"><h1>Analyzing the Wayland protocol</h1></a>
+<p>This is the log output from our compositor when it's ran as a nested Wayland instance:</p>
+<pre><code>[wlroots-sys/wlroots/backend/wayland/backend.c:186] Creating wayland backend
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_data_device_manager v3
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_shm v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_linux_dmabuf_v1 v3
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_drm v2
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zxdg_output_manager_v1 v2
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_compositor v4
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_subcompositor v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zxdg_shell_v6 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: xdg_wm_base v2
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_shell v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwlr_layer_shell_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_tablet_manager_v2 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: gamma_control_manager v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwlr_gamma_control_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: orbital_screenshooter v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwlr_export_dmabuf_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: org_kde_kwin_server_decoration_manager v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: gtk_primary_selection_device_manager v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: org_kde_kwin_idle v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_idle_inhibit_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwlr_input_inhibit_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_input_method_manager_v2 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_text_input_manager_v3 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_virtual_keyboard_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwlr_screencopy_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zxdg_decoration_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_pointer_constraints_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wp_presentation v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_output v3
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_seat v6
+[wlroots-sys/wlroots/backend/wayland/wl_seat.c:398] seat 0x7fb3a2235e10 offered pointer
+[wlroots-sys/wlroots/backend/wayland/wl_seat.c:411] seat 0x7fb3a2235e10 offered keyboard
+[wlroots-sys/wlroots/render/egl.c:149] Using EGL 1.4
+[wlroots-sys/wlroots/render/egl.c:150] Supported EGL extensions: EGL_ANDROID_blob_cache EGL_ANDROID_native_fence_sync EGL_EXT_buffer_age EGL_EXT_create_context_robustness EGL_EXT_image_dma_buf_import EGL_EXT_image_dma_buf_import_modifiers EGL_EXT_swap_buffers_with_damage EGL_IMG_context_priority EGL_KHR_config_attribs EGL_KHR_create_context EGL_KHR_create_context_no_error EGL_KHR_fence_sync EGL_KHR_get_all_proc_addresses EGL_KHR_gl_colorspace EGL_KHR_gl_renderbuffer_image EGL_KHR_gl_texture_2D_image EGL_KHR_gl_texture_3D_image EGL_KHR_gl_texture_cubemap_image EGL_KHR_image_base EGL_KHR_no_config_context EGL_KHR_reusable_sync EGL_KHR_surfaceless_context EGL_KHR_swap_buffers_with_damage EGL_EXT_pixel_format_float EGL_KHR_wait_sync EGL_MESA_configless_context EGL_MESA_drm_image EGL_MESA_image_dma_buf_export EGL_WL_bind_wayland_display EGL_WL_create_wayland_buffer_from_image 
+[wlroots-sys/wlroots/render/egl.c:151] EGL vendor: Mesa Project
+[wlroots-sys/wlroots/render/egl.c:97] Supported dmabuf buffer formats: AR30 XR30 AB30 XB30 AR24 AB24 XR24 XB24 AR15 RG16 R8   R16  GR88 GR32 YUV9 YU11 YU12 YU16 YU24 YVU9 YV11 YV12 YV16 YV24 NV12 NV16 YUYV UYVY 
+[wlroots-sys/wlroots/render/gles2/renderer.c:553] Using OpenGL ES 3.2 Mesa 18.3.1
+[wlroots-sys/wlroots/render/gles2/renderer.c:554] GL vendor: Intel Open Source Technology Center
+[wlroots-sys/wlroots/render/gles2/renderer.c:555] Supported GLES2 extensions: GL_EXT_blend_minmax GL_EXT_multi_draw_arrays GL_EXT_texture_filter_anisotropic GL_EXT_texture_compression_s3tc GL_EXT_occlusion_query_boolean GL_EXT_texture_compression_dxt1 GL_EXT_texture_format_BGRA8888 GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth24 GL_OES_element_index_uint GL_OES_fbo_render_mipmap GL_OES_mapbuffer GL_OES_rgb8_rgba8 GL_OES_standard_derivatives GL_OES_stencil8 GL_OES_texture_3D GL_OES_texture_float GL_OES_texture_float_linear GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_texture_npot GL_OES_vertex_half_float GL_EXT_texture_sRGB_decode GL_OES_EGL_image GL_OES_depth_texture GL_OES_packed_depth_stencil GL_EXT_texture_type_2_10_10_10_REV GL_OES_get_program_binary GL_APPLE_texture_max_level GL_EXT_discard_framebuffer GL_EXT_read_format_bgra GL_EXT_frag_depth GL_NV_fbo_color_attachments GL_OES_EGL_image_external GL_OES_EGL_sync GL_OES_vertex_array_object GL_OES_viewport_array GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_EXT_robustness GL_EXT_texture_rg GL_EXT_unpack_subimage GL_NV_draw_buffers GL_NV_read_buffer GL_NV_read_depth GL_NV_read_depth_stencil GL_NV_read_stencil GL_EXT_draw_buffers GL_EXT_map_buffer_range GL_KHR_debug GL_KHR_robustness GL_KHR_texture_compression_astc_ldr GL_OES_depth_texture_cube_map GL_OES_required_internalformat GL_OES_surfaceless_context GL_EXT_color_buffer_float GL_EXT_separate_shader_objects GL_EXT_shader_framebuffer_fetch GL_EXT_shader_integer_mix GL_EXT_tessellation_point_size GL_EXT_tessellation_shader GL_INTEL_conservative_rasterization GL_INTEL_performance_query GL_ANDROID_extension_pack_es31a GL_EXT_base_instance GL_EXT_compressed_ETC1_RGB8_sub_texture GL_EXT_copy_image GL_EXT_draw_buffers_indexed GL_EXT_draw_elements_base_vertex GL_EXT_gpu_shader5 GL_EXT_polygon_offset_clamp GL_EXT_primitive_bounding_box GL_EXT_render_snorm GL_EXT_shader_io_blocks GL_EXT_texture_border_clamp GL_EXT_texture_buffer GL_EXT_texture_cube_map_array GL_EXT_texture_norm16 GL_KHR_blend_equation_advanced GL_KHR_blend_equation_advanced_coherent GL_KHR_context_flush_control GL_KHR_robust_buffer_access_behavior GL_NV_image_formats GL_OES_copy_image GL_OES_draw_buffers_indexed GL_OES_draw_elements_base_vertex GL_OES_gpu_shader5 GL_OES_primitive_bounding_box GL_OES_sample_shading GL_OES_sample_variables GL_OES_shader_io_blocks GL_OES_shader_multisample_interpolation GL_OES_tessellation_point_size GL_OES_tessellation_shader GL_OES_texture_border_clamp GL_OES_texture_buffer GL_OES_texture_cube_map_array GL_OES_texture_stencil8 GL_OES_texture_storage_multisample_2d_array GL_OES_texture_view GL_EXT_blend_func_extended GL_EXT_buffer_storage GL_EXT_geometry_point_size GL_EXT_geometry_shader GL_EXT_shader_samples_identical GL_KHR_no_error GL_KHR_texture_compression_astc_sliced_3d GL_NV_fragment_shader_interlock GL_OES_EGL_image_external_essl3 GL_OES_geometry_point_size GL_OES_geometry_shader GL_OES_shader_image_atomic GL_EXT_clip_cull_distance GL_EXT_disjoint_timer_query GL_MESA_shader_integer_functions GL_EXT_shader_framebuffer_fetch_non_coherent GL_MESA_framebuffer_flip_y 
+[src/compositor.rs:434] Running compositor on wayland display wayland-2
+[src/compositor.rs:497] Starting compositor
+[wlroots-sys/wlroots/backend/wayland/backend.c:104] Initializating wayland backend
+[GLES2] FS SIMD8 shader: 5 inst, 0 loops, 24 cycles, 0:0 spills:fills, Promoted 0 constants, compacted 80 to 48 bytes.
+[GLES2] FS SIMD16 shader: 5 inst, 0 loops, 34 cycles, 0:0 spills:fills, Promoted 0 constants, compacted 80 to 48 bytes.
+[GLES2] VS SIMD8 shader: 28 inst, 0 loops, 116 cycles, 0:0 spills:fills, Promoted 0 constants, compacted 448 to 336 bytes.
+[GLES2] FS SIMD16 shader: 2 inst, 0 loops, 0 cycles, 0:0 spills:fills, Promoted 0 constants, compacted 32 to 32 bytes.
+ 
+</code></pre>
+<p>Your output will probably not match exactly, but it should roughly have this output.</p>
+<a class="header" href="#backend-setup" id="backend-setup"><h2>Backend Setup</h2></a>
+<p>When <code>build_auto</code> is called on <code>Compositor</code> it will dynamically detect which backend makes the most sense to spin up. If the compositor is ran in X11 or a Wayland compositor then it will run as a client with all the contents rendered to  a window. If ran on a TTY then it uses the kernel's DRM module. It also possible to <a href="http://way-cooler.org/docs/wlroots/compositor/struct.Builder.html#method.build_x11">specify a backend directly</a>.</p>
+<pre><code>[wlroots-sys/wlroots/backend/wayland/backend.c:186] Creating wayland backend
+</code></pre>
+<p>This first line shows which backend was selected. The Wayland backend was selected here, because it was ran in another Wayland instance.<sup>1</sup></p>
+<a class="header" href="#wayland-globals" id="wayland-globals"><h2>Wayland globals</h2></a>
+<pre><code>[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_data_device_manager v3
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_shm v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_linux_dmabuf_v1 v3
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_drm v2
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zxdg_output_manager_v1 v2
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_compositor v4
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_subcompositor v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zxdg_shell_v6 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: xdg_wm_base v2
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_shell v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwlr_layer_shell_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_tablet_manager_v2 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: gamma_control_manager v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwlr_gamma_control_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: orbital_screenshooter v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwlr_export_dmabuf_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: org_kde_kwin_server_decoration_manager v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: gtk_primary_selection_device_manager v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: org_kde_kwin_idle v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_idle_inhibit_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwlr_input_inhibit_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_input_method_manager_v2 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_text_input_manager_v3 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_virtual_keyboard_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwlr_screencopy_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zxdg_decoration_manager_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: zwp_pointer_constraints_v1 v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wp_presentation v1
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_output v3
+[wlroots-sys/wlroots/backend/wayland/backend.c:65] Remote wayland global: wl_seat v6
+</code></pre>
+<p>This is a list of all the globals that the parent compositor was advertising. This is output is specific to the Wayland backend. Protocols that are unstable have their names prepended with <code>z</code> by convention.</p>
+<p>Our compositor also exposes some globals even in this minimal state. Globals are the way clients can start up communication with the Wayland compositor. There are some default ones that come bundled with Wayland, such as <code>wl_compositor</code>, and then there are custom ones defined on a per compositor basis. wlroots comes with some popular custom protocols already implemented, but you have to explicitly opt in to using them explicitly in the builder. <a href="http://way-cooler.org/docs/wlroots/compositor/struct.Builder.html#method.xdg_shell_manager">xdg shell, for example, is an optional protocol that wasn't used in this example</a>.</p>
+<p>In order to see what globals the toy compositor is advertising you need to use a useful Wayland utility called <code>weston-info</code>.<sup>2</sup> It lists the Wayland globals advertised by the current compositor. The current compositor is determined by looking at the <code>$WAYLAND_DISPLAY</code> environment variable similar to how in X the current xserver is determined with <code>$DISPLAY</code>.</p>
+<p>In the log output it prints out the <code>$WAYLAND_DISPLAY</code>:</p>
+<pre><code>[src/compositor.rs:434] Running compositor on wayland display wayland-2
+</code></pre>
+<p>Lets see what globals are being advertised by our compositor:</p>
+<pre><code>interface: 'wl_compositor', version: 4, name: 1
+interface: 'wl_subcompositor', version: 1, name: 2
+</code></pre>
+<p><code>weston-info</code> prints out the name of each exposed interface on a new line along with the highest advertised interface version and the relative, atomically increasing index (confusingly prepended with &quot;name&quot;).</p>
+<p><code>wl_compositor</code> and <code>wl_subcompositor</code> are both standard Wayland interfaces. <code>wl_subcompositor</code> is automatically started by wlroots when a <code>wl_compositor</code> is used. A <code>wl_compositor</code> is the base global that all clients depend on. From this global a client can create a <code>wl_surface</code> and a <code>wl_region</code>.</p>
+<p>A <code>wl_surface</code> is a basic building block for drawing and rendering contents to the screen in Wayland. A client needs more than a <code>wl_surface</code> in order to render to the screen, but that is the basic object a compositor needs in order to render.<sup>3</sup></p>
+<p>A <code>wl_region</code> is the object that allows clients to tell the compositor where, in surface level coordinates<sup>4</sup>, it wants to handle input and where it is rendering content. Where it wants input is very important, but the default is that it accepts input everywhere in the surface. Specifying an area where the client is rendering content is important because it allows the compositor to know that any content behind that doesn't need to be redrawn. As a very simple example of this if there is a moving background on the screen and there is a fullscreen window then there is no need to draw the background saving precious cycles.</p>
+<p>The ability to specify only parts of the screen to update is a major feature of Wayland which will be totally ignored until a much later chapter. When starting out it's simple enough to simply redraw the entire screen each time a new frame is available. For non-toy compositors though it is vital that proper damage tracking (as the feature is called) is implemented. It reduces power consumption and makes the compositor faster.</p>
+<a class="header" href="#seat-offerings" id="seat-offerings"><h2>Seat offerings</h2></a>
+<pre><code>[wlroots-sys/wlroots/backend/wayland/wl_seat.c:398] seat 0x7fb3a2235e10 offered pointer
+[wlroots-sys/wlroots/backend/wayland/wl_seat.c:411] seat 0x7fb3a2235e10 offered keyboard
+</code></pre>
+<p>Rootson automatically offers the keyboard and mouse to all new windows that appear. This allows input to passthrough directly to the toy compositor, but it also hints at this concept of Wayland &quot;seats&quot;.</p>
+<p><a href="https://wayland.freedesktop.org/docs/html/apa.html#protocol-spec-wl_seat">A Wayland seat is a collection of inputs devices</a> usually handled under the hood by libinput. Seats are created by the compositor, advertised to any new clients including when new input methods are added, and are used to facilitate user input to clients including drag-in-drop.</p>
+<p>Seats are necessary to communicate properly with clients and will be explored in a later chapter.</p>
+<a class="header" href="#egl-setup" id="egl-setup"><h2>EGL Setup</h2></a>
+<pre><code>[wlroots-sys/wlroots/render/egl.c:149] Using EGL 1.4
+[wlroots-sys/wlroots/render/egl.c:150] Supported EGL extensions: EGL_ANDROID_blob_cache EGL_ANDROID_native_fence_sync EGL_EXT_buffer_age EGL_EXT_create_context_robustness EGL_EXT_image_dma_buf_import EGL_EXT_image_dma_buf_import_modifiers EGL_EXT_swap_buffers_with_damage EGL_IMG_context_priority EGL_KHR_config_attribs EGL_KHR_create_context EGL_KHR_create_context_no_error EGL_KHR_fence_sync EGL_KHR_get_all_proc_addresses EGL_KHR_gl_colorspace EGL_KHR_gl_renderbuffer_image EGL_KHR_gl_texture_2D_image EGL_KHR_gl_texture_3D_image EGL_KHR_gl_texture_cubemap_image EGL_KHR_image_base EGL_KHR_no_config_context EGL_KHR_reusable_sync EGL_KHR_surfaceless_context EGL_KHR_swap_buffers_with_damage EGL_EXT_pixel_format_float EGL_KHR_wait_sync EGL_MESA_configless_context EGL_MESA_drm_image EGL_MESA_image_dma_buf_export EGL_WL_bind_wayland_display EGL_WL_create_wayland_buffer_from_image 
+[wlroots-sys/wlroots/render/egl.c:151] EGL vendor: Mesa Project
+[wlroots-sys/wlroots/render/egl.c:97] Supported dmabuf buffer formats: AR30 XR30 AB30 XB30 AR24 AB24 XR24 XB24 AR15 RG16 R8   R16  GR88 GR32 YUV9 YU11 YU12 YU16 YU24 YVU9 YV11 YV12 YV16 YV24 NV12 NV16 YUYV UYVY 
+[wlroots-sys/wlroots/render/gles2/renderer.c:553] Using OpenGL ES 3.2 Mesa 18.3.1
+[wlroots-sys/wlroots/render/gles2/renderer.c:554] GL vendor: Intel Open Source Technology Center
+[wlroots-sys/wlroots/render/gles2/renderer.c:555] Supported GLES2 extensions: GL_EXT_blend_minmax GL_EXT_multi_draw_arrays GL_EXT_texture_filter_anisotropic GL_EXT_texture_compression_s3tc GL_EXT_occlusion_query_boolean GL_EXT_texture_compression_dxt1 GL_EXT_texture_format_BGRA8888 GL_OES_compressed_ETC1_RGB8_texture GL_OES_depth24 GL_OES_element_index_uint GL_OES_fbo_render_mipmap GL_OES_mapbuffer GL_OES_rgb8_rgba8 GL_OES_standard_derivatives GL_OES_stencil8 GL_OES_texture_3D GL_OES_texture_float GL_OES_texture_float_linear GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_texture_npot GL_OES_vertex_half_float GL_EXT_texture_sRGB_decode GL_OES_EGL_image GL_OES_depth_texture GL_OES_packed_depth_stencil GL_EXT_texture_type_2_10_10_10_REV GL_OES_get_program_binary GL_APPLE_texture_max_level GL_EXT_discard_framebuffer GL_EXT_read_format_bgra GL_EXT_frag_depth GL_NV_fbo_color_attachments GL_OES_EGL_image_external GL_OES_EGL_sync GL_OES_vertex_array_object GL_OES_viewport_array GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_EXT_robustness GL_EXT_texture_rg GL_EXT_unpack_subimage GL_NV_draw_buffers GL_NV_read_buffer GL_NV_read_depth GL_NV_read_depth_stencil GL_NV_read_stencil GL_EXT_draw_buffers GL_EXT_map_buffer_range GL_KHR_debug GL_KHR_robustness GL_KHR_texture_compression_astc_ldr GL_OES_depth_texture_cube_map GL_OES_required_internalformat GL_OES_surfaceless_context GL_EXT_color_buffer_float GL_EXT_separate_shader_objects GL_EXT_shader_framebuffer_fetch GL_EXT_shader_integer_mix GL_EXT_tessellation_point_size GL_EXT_tessellation_shader GL_INTEL_conservative_rasterization GL_INTEL_performance_query GL_ANDROID_extension_pack_es31a GL_EXT_base_instance GL_EXT_compressed_ETC1_RGB8_sub_texture GL_EXT_copy_image GL_EXT_draw_buffers_indexed GL_EXT_draw_elements_base_vertex GL_EXT_gpu_shader5 GL_EXT_polygon_offset_clamp GL_EXT_primitive_bounding_box GL_EXT_render_snorm GL_EXT_shader_io_blocks GL_EXT_texture_border_clamp GL_EXT_texture_buffer GL_EXT_texture_cube_map_array GL_EXT_texture_norm16 GL_KHR_blend_equation_advanced GL_KHR_blend_equation_advanced_coherent GL_KHR_context_flush_control GL_KHR_robust_buffer_access_behavior GL_NV_image_formats GL_OES_copy_image GL_OES_draw_buffers_indexed GL_OES_draw_elements_base_vertex GL_OES_gpu_shader5 GL_OES_primitive_bounding_box GL_OES_sample_shading GL_OES_sample_variables GL_OES_shader_io_blocks GL_OES_shader_multisample_interpolation GL_OES_tessellation_point_size GL_OES_tessellation_shader GL_OES_texture_border_clamp GL_OES_texture_buffer GL_OES_texture_cube_map_array GL_OES_texture_stencil8 GL_OES_texture_storage_multisample_2d_array GL_OES_texture_view GL_EXT_blend_func_extended GL_EXT_buffer_storage GL_EXT_geometry_point_size GL_EXT_geometry_shader GL_EXT_shader_samples_identical GL_KHR_no_error GL_KHR_texture_compression_astc_sliced_3d GL_NV_fragment_shader_interlock GL_OES_EGL_image_external_essl3 GL_OES_geometry_point_size GL_OES_geometry_shader GL_OES_shader_image_atomic GL_EXT_clip_cull_distance GL_EXT_disjoint_timer_query GL_MESA_shader_integer_functions GL_EXT_shader_framebuffer_fetch_non_coherent GL_MESA_framebuffer_flip_y 
+...
+[GLES2] FS SIMD8 shader: 5 inst, 0 loops, 24 cycles, 0:0 spills:fills, Promoted 0 constants, compacted 80 to 48 bytes.
+[GLES2] FS SIMD16 shader: 5 inst, 0 loops, 34 cycles, 0:0 spills:fills, Promoted 0 constants, compacted 80 to 48 bytes.
+[GLES2] VS SIMD8 shader: 28 inst, 0 loops, 116 cycles, 0:0 spills:fills, Promoted 0 constants, compacted 448 to 336 bytes.
+[GLES2] FS SIMD16 shader: 2 inst, 0 loops, 0 cycles, 0:0 spills:fills, Promoted 0 constants, compacted 32 to 32 bytes.
+</code></pre>
+<p>Currently all backends need a renderer in wlroots which is automatically setup when you create one. This output is from the Wayland backend setting up the EGL drawing for rendering. In the future this may change, as the rendering API <a href="https://github.com/swaywm/wlroots/issues/774">is</a> <a href="https://github.com/swaywm/wlroots/issues/558">in</a> <a href="https://github.com/swaywm/wlroots/issues/1352">flux</a>.</p>
+<a class="header" href="#everything-after-run-is-called" id="everything-after-run-is-called"><h2>Everything after run is called</h2></a>
+<pre><code>[src/compositor.rs:434] Running compositor on wayland display wayland-2
+[src/compositor.rs:497] Starting compositor
+[wlroots-sys/wlroots/backend/wayland/backend.c:104] Initializating wayland backend
+</code></pre>
+<p>Everything after these lines, including these lines, is printed to the log after <code>run</code> is called. Since there are no clients that connected there is no logging from them and since there are no event handlers nothing else happens.</p>
+<hr />
+<p><sup>1</sup> On my machine it was ran in rootson, the wlroots reference compositor, which is why Wayland was selected.</p>
+<p><sup>2</sup> In most Linux distributions this utility is packaged along with weston, the reference Wayland compositor.</p>
+<p><sup>3</sup> Usually a surface is wrapped in a shell. What a shell adds to a <code>wl_surface</code> is <em>context</em>. Without the proper context a compositor doesn't know if the surface it was just handed by the client is a standalone window, a popup, a background, a status bar, or a cursor to be rendered. All of them need to be handled differently and they are all handled using a dedicated wayland &quot;shell&quot; or a specialized non-shell protocol.</p>
+<p><sup>4</sup> It has to be surface level because clients doesn't know about anything but the content it renders.</p>
+<a class="header" href="#exercises" id="exercises"><h1>Exercises</h1></a>
+<ol>
+<li>You can trick a Wayland compositor to run as the child of a compositor you're not currently in by overriding the <code>WAYLAND_DISPLAY</code> variable. Using this, get the toy compositor to run inside the toy compositor.</li>
+<li><a href="http://way-cooler.org/docs/wlroots/compositor/struct.Builder.html">Explore some of the options for the <code>compositor::Builder</code></a>.</li>
+<li>Reimplement <code>build_auto</code> using the explicit build functions. Use <code>$DISPLAY</code> to detect when running nested in X11 and <code>$WAYLAND_DISPLAY</code> to detect running nested in Wayland.</li>
+</ol>
+<a class="header" href="#goodbye-world" id="goodbye-world"><h1>Goodbye World</h1></a>
+<p>The compositor from the previous section has a bug: it can't be exited from if it is started in DRM. This is a pretty serious bug, one that will be addressed in two ways in this section.</p>
+<p>The first is the most extreme, and easiest to implement, option: adding a shut down key sequence. The compositor will be configured so if the user presses <code>Ctrl+Shift+Escape</code> it will gracefully terminate with a zero exit status. This will be useful in debugging the compositor as it makes it easy to shut down even in DRM.<sup>1</sup></p>
+<p>The second escape access is a feature that is often taken for granted: the ability to switch TTYs. The standard <code>Ctrl+Alt+F#</code> sequence will be implemented to switch TTYs when the compositor is running on DRM. When it's running on another backend it will simply ignore that (since it won't have the proper access controls to do the context switch).</p>
+<p>This section will primarily concern itself with <a href="http://way-cooler.org/docs/wlroots/input/keyboard/trait.Handler.html">setting up handlers</a> for the first time, handling <a href="http://way-cooler.org/docs/wlroots/input/keyboard/event/struct.Key.html">keyboard input</a>, and <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html">learning to use wlroots-rs handles</a>.</p>
+<a class="header" href="#shutting-down-the-compositor-gracefully" id="shutting-down-the-compositor-gracefully"><h1>Shutting down the compositor gracefully</h1></a>
+<p>Before the compositor can begin listening for keyboard input it needs to listen for keyboards.</p>
+<p>For each resource type that can be created there is a manager module that provides a builder and some function signatures for the compositor writer to describe how a resource should be managed. <a href="http://way-cooler.org/docs/wlroots/input/manager/index.html">Here is the input device resource manager module</a>.</p>
+<p>To specify that a keyboard should be managed by the compositor a function needs to be defined <a href="http://way-cooler.org/docs/wlroots/input/manager/type.KeyboardAdded.html">matching the keyboard resource manager signature</a>. This function will be later called by wlroots when a keyboard is announced to the compositor through libinput.</p>
+<p>Once the function is defined with the necessary signature it needs to be put into the resource builder and the resource builder is passed to the <code>compositor::Builder</code>. <a href="http://way-cooler.org/docs/wlroots/input/manager/struct.Builder.html">Here is the input builder</a> and <a href="http://way-cooler.org/docs/wlroots/compositor/struct.Builder.html#method.input_manager">here is where the <code>compositor::Builder</code> is given an input builder</a>.</p>
+<a class="header" href="#a-minimal-keyboard-handler" id="a-minimal-keyboard-handler"><h2>A Minimal Keyboard Handler</h2></a>
+<p>I will now do the bare minimum to implement the signature needed for a keyboard to be constructed:</p>
+<pre><pre class="playpen"><code class="language-rust">fn main() {
+    init_logging(WLR_DEBUG, None);
+    let input_builder = input::manager::Builder::default()
+        .keyboard_added(keyboard_added);
+    compositor::Builder::new()
+        .input_manager(input_builder)
+        .build_auto(())
+        .run()
+}
+
+fn keyboard_added(_compositor_handle: compositor::Handle,
+                  _keyboard_handle: keyboard::Handle)
+                  -&gt; Option&lt;Box&lt;keyboard::Handler&gt;&gt; {
+    None
+}
+</code></pre></pre>
+<p>With the provided implementation whenever a keyboard is announced wlroots-rs will call <code>keyboard_added</code>. Since it unconditionally returns <code>None</code> it will not allocate anything for they keyboard resource and it will simple be dropped.</p>
+<p>In order to hang on to the resource a handler must be defined and allocated using <code>Box</code> to make a trait object. The handler defines how to deal with event the resource can trigger, including <a href="http://way-cooler.org/docs/wlroots/input/keyboard/trait.Handler.html#method.on_key">when a key is pressed</a>.</p>
+<p>A trait needs a structure to implement on so a <a href="https://doc.rust-lang.org/nomicon/exotic-sizes.html">zero-sized</a> is used here so there's no overhead: <sup>2</sup></p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn keyboard_added(_compositor_handle: compositor::Handle,
+                  _keyboard_handle: keyboard::Handle)
+                  -&gt; Option&lt;Box&lt;keyboard::Handler&gt;&gt; {
+    Some(Box::new(KeyboardHandler))
+}
+
+struct KeyboardHandler;
+
+impl keyboard::Handler for KeyboardHandler {
+    // All handler methods have a default implementation that does nothing
+    // So because no methods are define here, every event on the keyboard
+    // is ignored.
+}
+#}</code></pre></pre>
+<a class="header" href="#implementing-shutdown" id="implementing-shutdown"><h2>Implementing Shutdown</h2></a>
+<p>When a key is pressed <a href="http://way-cooler.org/docs/wlroots/input/keyboard/trait.Handler.html#method.on_key">this method</a> receives <a href="http://way-cooler.org/docs/wlroots/input/keyboard/event/struct.Key.html">the event</a>. The key event has a couple methods but the <a href="http://way-cooler.org/docs/wlroots/input/keyboard/event/struct.Key.html#method.pressed_keys">most important one is <code>pressed_keys</code></a>. It will provide all the keys as seen by xkb that were pressed when the event fired.</p>
+<p>Using the keysyms module from the reexported <a href="https://crates.io/crates/xkbcommon">xkbcommon crate</a> the list of keys can be iterated over and pattern matched.</p>
+<p>The last piece of the puzzle is stopping the compositor. Call <a href="http://way-cooler.org/docs/wlroots/compositor/fn.terminate.html"><code>terminate</code> to stop</a> the compositor. It can be called at any time and will gracefully kill clients, destroy resource managers, and then wind back up the stack to where <code>run</code> was called.</p>
+<p>Here is the complete code for a compositor that will be able to close itself if there is a keyboard with an escape key:</p>
+<pre><pre class="playpen"><code class="language-rust">extern crate wlroots;
+
+use wlroots::{compositor,
+              input::{self, keyboard},
+              utils::log::{WLR_DEBUG, init_logging},
+              xkbcommon::xkb::keysyms};
+
+fn main() {
+    init_logging(WLR_DEBUG, None);
+    let input_builder = input::manager::Builder::default()
+        .keyboard_added(keyboard_added);
+    compositor::Builder::new()
+        .input_manager(input_builder)
+        .build_auto(())
+        .run()
+}
+
+fn keyboard_added(_compositor_handle: compositor::Handle,
+                  _keyboard_handle: keyboard::Handle)
+                  -&gt; Option&lt;Box&lt;keyboard::Handler&gt;&gt; {
+    Some(Box::new(KeyboardHandler))
+}
+
+struct KeyboardHandler;
+
+impl keyboard::Handler for KeyboardHandler {
+    fn on_key(&amp;mut self,
+              compositor_handle: compositor::Handle,
+              _keyboard_handle: keyboard::Handle,
+              key_event: &amp;keyboard::event::Key) {
+        for key in key_event.pressed_keys() {
+            match key {
+                keysyms::KEY_Escape =&gt; wlroots::compositor::terminate(),
+                _ =&gt; { /* Do nothing */ }
+            }
+        }
+    }
+}
+</code></pre></pre>
+<a class="header" href="#switching-ttys" id="switching-ttys"><h1>Switching TTYs</h1></a>
+<p>Implementing the ability to switch TTYs is not much more difficult <a href="http://way-cooler.org/docs/wlroots/backend/struct.Session.html#method.change_vt">once the relevant function is located on the <code>Session</code> struct</a>. However getting to that struct from the callback requires explaining wlroot-rs handles.</p>
+<blockquote>
+<a class="header" href="#handles-in-wlroots-rs" id="handles-in-wlroots-rs"><h1>Handles in wlroots-rs</h1></a>
+<p>Handles represent the wlroots-rs solution to the complicated lifetimes of wlroots resources.</p>
+<p>In Rust normally you can either own a value or borrow it for some lifetime. However, you can't
+&quot;own&quot; a keyboard because you don't control its lifetime. At any point, for example, the keyboard
+could be yanked out by the user and then it will need to be cleaned up.</p>
+<p>You also can't have these be defined via lifetimes on borrows because lifetimes behave like a
+compile-time read-write lock on data. That does mean there can have a callback that takes a borrow, for example:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// Callback for when a key is pressed
+fn on_key(keyboard: &amp;Keyboard) {
+    // A Keyboard will be valid here because wlroots is single threaded.
+}
+#}</code></pre></pre>
+<p>but now that resource can't escape these limited callbacks. That's unfortunate because you want to use the resources
+outside these limited scopes.</p>
+<p>To solve this a <code>Handle</code> is used to refer indirectly to resources. Handles are essentially thin wrappers around
+<a href="https://doc.rust-lang.org/std/rc/struct.Weak.html"><code>Weak</code> smart pointers</a>. They can only be accessed in
+callbacks by calling <code>run</code> on them, which performs additional safety checks to ensure the <code>Handle</code> is valid.</p>
+<p>Please read <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html">the handle documentation in order to better understand Handles</a>.</p>
+</blockquote>
+<p>A <code>Session</code> is <a href="http://way-cooler.org/docs/wlroots/backend/enum.Backend.html#method.get_session">obtained from a <code>Backend</code></a>. A <code>Backend</code> can be <a href="http://way-cooler.org/docs/wlroots/compositor/struct.Compositor.html#method.backend">obtained from a <code>&amp;Compositor</code></a>. To get a reference to the <code>Compositor</code> the <code>compositor_handle</code> must be upgraded.</p>
+<p>When you upgrade a handle there's a change it can fail <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html#method.run">according to its signature</a>. The <a href="http://way-cooler.org/docs/wlroots/utils/enum.HandleErr.html">possible error values</a> indicate the two requirements for upgrading a handle:</p>
+<ol>
+<li>Two handles to the same resource can not be upgraded at the same time. If this were allowed there could be two mutable references to the same resource, which is against Rust's memory model.</li>
+<li>If the resource behind the handle has been destroyed then the handle can never be upgraded again.<sup>3</sup></li>
+</ol>
+<p>Because these errors should not occur for the compositor handle, it is sufficient to simply <code>unwrap</code> the result here:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+impl keyboard::Handler for KeyboardHandler {
+    fn on_key(&amp;mut self,
+              compositor_handle: compositor::Handle,
+              _keyboard_handle: keyboard::Handle,
+              key_event: &amp;keyboard::event::Key) {
+        for key in key_event.pressed_keys() {
+            match key {
+                keysyms::KEY_Escape =&gt; wlroots::compositor::terminate(),
+                keysyms::KEY_XF86Switch_VT_1 ..= keysyms::KEY_XF86Switch_VT_12 =&gt; {
+                    compositor_handle.run(|compositor| {
+                        let backend = compositor.backend_mut();
+                        if let Some(mut session) = backend.get_session() {
+                            session.change_vt(key - keysyms::KEY_XF86Switch_VT_1 + 1);
+                        }
+                    }).unwrap();
+                }
+                _ =&gt; { /* Do nothing */ }
+            }
+        }
+    }
+}
+#}</code></pre></pre>
+<hr />
+<p><sup>1</sup> Huge caveat to this: if the system is deadlocked, such as by an innocuous <code>loop {}</code>, then the compositor can no longer process input including the escape sequence. Either test all of your features in a nested instance (where input can still be processed by the parent system) or have <code>ssh</code> as a backup to <code>pkill</code> the process.</p>
+<p><sup>2</sup> There's still an allocation, but it will allocate <code>sizeof(data_struct) + sizeof(vtable) + sizeof(internal_wayland_listeners)</code>. Even though the size of the data struct is zero there is a non zero cost for the internal wayland listeners and vtable (which allows you to have implementations for the same trait implemented differently on different structs). This is a price you must always pay. <a href="https://github.com/swaywm/wlroots-rs/issues/238">In the future it might be possible to specify static listeners</a>.</p>
+<p><sup>3</sup> In this case the <code>Compositor</code> lives for the life of the compositor, so it will never be <code>AlreadyDropped</code>. This is not the case for other resources, such as <code>Keyboard</code>s.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Builder","A builder of static functions to manage and create resources."]],"type":[["NewSurface","Callback that's triggered when a new surface is presented to the X server."],["OnReady","Callback that's triggered when the XWayland library is ready."]]});

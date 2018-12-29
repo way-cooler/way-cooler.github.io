@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["event",""],["surface",""]],"struct":[["Server",""]],"trait":[["ManagerHandler",""]]});
+initSidebarItems({"mod":[["event",""],["manager","XWayland client resources are managed by the XWayland resource manager and server."],["surface",""]],"struct":[["Server",""]]});

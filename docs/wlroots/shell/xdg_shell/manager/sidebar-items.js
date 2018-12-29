@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Builder","A builder of static functions to manage and create resources."]],"type":[["NewSurface","Callback that is triggered when a new stable XDG shell surface appears."]]});

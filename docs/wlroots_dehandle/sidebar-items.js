@@ -1,0 +1,1 @@
+initSidebarItems({"attr":[["wlroots_dehandle","Attribute to automatically call the `run` method on handles with the remaining block of code."]]});

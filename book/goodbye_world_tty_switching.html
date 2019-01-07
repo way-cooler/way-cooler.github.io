@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Analyzing the code - </title>
+        <title>TTY switching - </title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html" class="active"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li></ol>
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html" class="active"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -136,72 +136,109 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#analyzing-the-code" id="analyzing-the-code"><h1>Analyzing the code</h1></a>
-<p>After explaining what each change gives us, I'll then explain what each line of code does.</p>
-<p>At the end of each chapter there will be a list of suggestions and challenges
-which I suggest you at least read over if not try. They exist to encourage you
-to read through the <a href="http://way-cooler.org/docs/wlroots/index.html">wlroots-rs
-documentation</a> and <a href="https://wayland.freedesktop.org/docs/html/">Wayland
-documentation</a> in order to better
-familiarize yourself.</p>
-<a class="header" href="#logging-setup" id="logging-setup"><h2>Logging setup</h2></a>
+                        <a class="header" href="#switching-ttys" id="switching-ttys"><h1>Switching TTYs</h1></a>
+<p>Implementing the ability to switch TTYs is not much more difficult <a href="http://way-cooler.org/docs/wlroots/backend/struct.Session.html#method.change_vt">once the
+relevant function is located on the <code>Session</code>
+struct</a>.
+However getting to that struct from the callback requires explaining wlroot-rs
+handles.</p>
+<blockquote>
+<a class="header" href="#handles-in-wlroots-rs" id="handles-in-wlroots-rs"><h1>Handles in wlroots-rs</h1></a>
+<p>Handles represent the wlroots-rs solution to the complicated lifetimes of
+Wayland resources.</p>
+<p>In Rust normally you can either own a value or borrow it for some lifetime.
+However, you can't
+&quot;own&quot; a keyboard because you don't control its lifetime. At any point, for
+example, the keyboard
+could be yanked out by the user and then it will need to be cleaned up.</p>
+<p>You also can't have these be defined via lifetimes on borrows because
+lifetimes behave like a  compile-time read-write lock on data. That does mean,
+however, that there can be callbacks that takes a borrow, for example:</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-    init_logging(WLR_DEBUG, None);
+/// Callback for when a key is pressed
+fn on_key(keyboard: &amp;Keyboard) {
+    // A Keyboard will be valid here because wlroots is single threaded.
+}
 #}</code></pre></pre>
-<p>This line is not strictly necessary for the compositor to run. wlroots (and
-wlroots-rs) prints a log message each time something interesting happens which
-is useful for debugging. In general, you should always have this line in your
-compositor.</p>
-<p>The first parameter is the minimum level that is logged. The second parameter is
-an optional callback that will be called each time a message is logged.</p>
-<p>You can log a message using this system by using the <code>wlr_log!</code>
-macro<sup>1</sup>. Here is an example:</p>
+<p>Unfortunately, now that resource can't escape the callback. Often these
+resources will want to be used beyond this limited scope.</p>
+<p>To solve this a <code>Handle</code> is used to refer indirectly to resources. Handles are
+essentially thin wrappers around
+<a href="https://doc.rust-lang.org/std/rc/struct.Weak.html"><code>Weak</code> smart pointers</a>.
+They can only be accessed in
+callbacks by calling <code>run</code> on them, which performs additional safety checks to
+ensure the <code>Handle</code> is valid.</p>
+<p>In order to make using handles easier there are also two macros that make
+them much easier to use:
+<a href="http://way-cooler.org/docs/wlroots/macro.with_handles.html">with_handles</a>
+and <a href="http://way-cooler.org/docs/wlroots_dehandle/macro.wlroots_dehandle.html">wlroots_dehandle</a>.
+Either, or neither, can be used. They are only implemented as a convenience.
+However, they will be used later in this book so you should learn them now.</p>
+<p>Please read <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html">the handle documentation in order to better understand Handles</a>.</p>
+</blockquote>
+<a class="header" href="#accessing-the-session-from-the-compositor" id="accessing-the-session-from-the-compositor"><h2>Accessing the Session from the Compositor</h2></a>
+<p>A <code>Session</code> is <a href="http://way-cooler.org/docs/wlroots/backend/enum.Backend.html#method.get_session">obtained from a
+<code>Backend</code></a>.
+A <code>Backend</code> can be <a href="http://way-cooler.org/docs/wlroots/compositor/struct.Compositor.html#method.backend">obtained from a
+<code>&amp;Compositor</code></a>.
+To get a reference to the <code>Compositor</code> the <code>compositor_handle</code> must be upgraded.</p>
+<p>When you upgrade a handle it can potentially fail <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html#method.run">according to its
+signature</a>.
+The <a href="http://way-cooler.org/docs/wlroots/utils/enum.HandleErr.html">possible error
+values</a> indicate
+the two requirements for upgrading a handle are:</p>
+<ol>
+<li>Two handles to the same resource can not be upgraded at the same time. If
+this were allowed there could be two mutable references to the same resource
+which is against Rust's memory model.</li>
+<li>If the resource behind the handle has been destroyed then the handle can
+never be upgraded again.<sup>1</sup></li>
+</ol>
+<p>Because these errors should not occur for the compositor handle, it is
+sufficient to simply <code>unwrap</code> the result:</p>
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-// It has the same syntax as println! or format!
-wlr_log!(WLR_DEBUG, &quot;This is an example {:?}&quot;, some_struct)
+impl keyboard::Handler for KeyboardHandler {
+    fn on_key(&amp;mut self,
+              compositor_handle: compositor::Handle,
+              _keyboard_handle: keyboard::Handle,
+              key_event: &amp;keyboard::event::Key) {
+        for key in key_event.pressed_keys() {
+            match key {
+                keysyms::KEY_XF86Switch_VT_1 ..= keysyms::KEY_XF86Switch_VT_12 =&gt; {
+                    compositor_handle.run(|compositor| {
+                        let backend = compositor.backend_mut();
+                        if let Some(mut session) = backend.get_session() {
+                            session.change_vt(key - keysyms::KEY_XF86Switch_VT_1 + 1);
+                        }
+                    }).unwrap();
+                }
+                _ =&gt; { /* Do nothing */ }
+            }
+        }
+    }
+}
 #}</code></pre></pre>
-<p>The first parameter is the log level you want to log at. Any arguments after
-that are passed to <code>format!</code> with the format string being the second argument.</p>
-<pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-    compositor::Builder::new().build_auto(()).run()
-#}</code></pre></pre>
-<p>This is the real meat of the program.</p>
-<p>This creates a builder for a <code>Compositor</code>. There can only be one <code>Compositor</code>
-object per process<sup>2</sup> . The builder is how Wayland globals and their
-callbacks are set up.</p>
-<p>In this case no callbacks are set up the <code>Compositor</code> is just immediately built.
-When you build the compositor, just like you build any object in wlroots-rs, you
-need to give it user state. In this case, there is no state to store so you can
-just pass the unit type <code>()</code>.</p>
-<p>Once the <code>Compositor</code> is set up then <code>run</code> can be called. This will put it in
-the main Wayland event loop listening for events and dispatching to the
-callbacks. It will keep running until <code>wlroots::terminate</code> is called. Since thi s
-is never call it in this compositor it won't happen until it's kill it via a
-signal.</p>
 <hr />
-<p><sup>1</sup> Don't forget to import macros by prepending <code>#[macro_use]</code> to
-<code>extern crate wlroots</code>.</p>
-<p><sup>2</sup> wlroots-rs is not designed to be thread safe with its objects. Most
-objects are <code>!Send</code> and <code>!Sync</code>.</p>
+<p><sup>1</sup> In this case the <code>Compositor</code> lives for the life of the compositor,
+so it will never be <code>AlreadyDropped</code>. This is not the case for other resources,
+such as keyboards.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="hello_world.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="goodbye_world_shutdown.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="hello_world_output.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="goodbye_world_exercises.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -213,13 +250,13 @@ objects are <code>!Send</code> and <code>!Sync</code>.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="hello_world.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="goodbye_world_shutdown.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="hello_world_output.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="goodbye_world_exercises.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html" class="active"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html" class="active"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -137,11 +137,16 @@
                 <div id="content" class="content">
                     <main>
                         <a class="header" href="#exercises" id="exercises"><h1>Exercises</h1></a>
-<ol>
-<li>You can trick a Wayland compositor to run as the child of a compositor you're not currently in by overriding the <code>WAYLAND_DISPLAY</code> variable. Using this, get the toy compositor to run inside the toy compositor.</li>
-<li><a href="http://way-cooler.org/docs/wlroots/compositor/struct.Builder.html">Explore some of the options for the <code>compositor::Builder</code></a>.</li>
-<li>Reimplement <code>build_auto</code> using the explicit build functions. Use <code>$DISPLAY</code> to detect when running nested in X11 and <code>$WAYLAND_DISPLAY</code> to detect running nested in Wayland.</li>
-</ol>
+<a class="header" href="#russian-doll-compositor" id="russian-doll-compositor"><h2>Russian Doll Compositor</h2></a>
+<p>You can trick a Wayland compositor to run as the child of a compositor you're
+not currently in by overriding the <code>WAYLAND_DISPLAY</code> variable.</p>
+<p>Using this, get the toy compositor to run inside the toy compositor.</p>
+<a class="header" href="#reimplement-build_auto" id="reimplement-build_auto"><h2>Reimplement build_auto</h2></a>
+<p><a href="http://way-cooler.org/docs/wlroots/compositor/struct.Builder.html">Explore some of the options for the
+<code>compositor::Builder</code></a>.</p>
+<p>Reimplement <code>build_auto</code> using the explicit build functions.</p>
+<p>Use <code>$DISPLAY</code> to detect when running nested in X11 and <code>$WAYLAND_DISPLAY</code> to
+detect running nested in Wayland.</p>
 
                     </main>
 

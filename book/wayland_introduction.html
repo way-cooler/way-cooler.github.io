@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html" class="active">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html" class="active">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -139,22 +139,33 @@
                         <a class="header" href="#how-to-make-a-wayland-compositor-in-rust" id="how-to-make-a-wayland-compositor-in-rust"><h1>How to Make a Wayland Compositor (in Rust)</h1></a>
 <a class="header" href="#what-is-wayland" id="what-is-wayland"><h2>What is Wayland?</h2></a>
 <p>Wayland is the replacement for the X Window System, colloquially known as X11.</p>
-<p>Similar to how the most popular implementation of X11 is XOrg the most popular version of Wayland is the reference implementation. Other versions exist, including one <a href="https://github.com/Smithay/wayland-rs">written in Rust</a>.</p>
-<p>It's highly suggested you read everything <a href="https://wayland.freedesktop.org/">on the official Wayland site</a>, specifically the FAQ, architecture page, and the documentation. You can also just read along here and consult that site when you come across a term or process you don't understand.</p>
+<p>It's recommended that you read <a href="https://wayland.freedesktop.org/">the official Wayland website</a>,
+specifically the FAQ, architecture, and documentation, to familiarize yourself with the project.
+You should also keep this in your back pocket as you read this book if you need
+clarification on any terminology or concepts you don't understand.</p>
 <a class="header" href="#what-is-a-wayland-compositor" id="what-is-a-wayland-compositor"><h2>What is a Wayland Compositor?</h2></a>
-<p>If there's only one thing you learn from this book, it should be this:</p>
+<p>If you only learn one thing from this book, it should be that:</p>
 <p><strong>Wayland is not a compositor</strong></p>
 <p><strong>Wayland is not a window manager</strong></p>
 <p><strong>Wayland is not a display server</strong></p>
-<p><strong>Wayland is a <em>protocol</em> for clients and compositors to speak to each other</strong></p>
-<p><a href="https://wayland.freedesktop.org/architecture.html">This is required reading before you proceed.</a> (feel free to ignore the hardware and rendering sections, focus on the diagrams).</p>
-<p>In X11 there are two main components that are normally used to make a functioning system: the xserver and a window manager (which is just a client to the xserver). Technically all you need is the xserver, but the window manager helps make it usable. Most variations of X11 systems are simply swapping out what the window manager is. For example, Gnome, KDE, i3, and AwesomeWM are all examples of very different ways to build a functioning X11 system. Across all of these, they generally will use the same xserver.</p>
-<p>A Wayland compositor is like a window manager and the xserver bundled into one. Like in X11 it is in charge of putting other windows in their proper place, but unlike X11 <em>only</em> the compositor has the power to do this. In X11 a window manager is no more privileged than any other client. In Wayland the compositor is the master and the clients are the slaves.</p>
+<p>Rather, <strong>Wayland is a <em>protocol</em> for clients and compositors to speak to each other</strong></p>
+<p>In a typical X11 system, there are two necessary components: the X
+server and the window manager. The X server handles rendering and hardware
+interactions, and the window manager handles user interaction and window
+arrangement. Almost all X11 desktops use the Xorg server as the X server, and
+write their own window managers to provide the design and behavior of their
+desktop. Gnome, KDE, i3, and AwesomeWM, for example, have a very different
+user experience but are all still based on the Xorg server. Fundamentally, the
+window manager is an X11 client like any other, and all X11 clients are able to
+interact with your desktop in the same way.</p>
+<p>A Wayland compositor is different. It is the sole source of authority
+on both rendering/hardware <em>and</em> window management. The right to arrange
+windows on screen and drive user interactions is reserved by the compositor.</p>
 <p>Here is a list of compositors that will be referenced later in this book:</p>
 <ul>
 <li><a href="http://way-cooler.org">Way Cooler</a>
 <ul>
-<li>Written by me, Preston Carpenter. It was the first Wayland compositor written in Rust.</li>
+<li>Written by yours truly, Preston Carpenter. It was the first Wayland compositor written in Rust.</li>
 </ul>
 </li>
 <li><a href="https://github.com/Drakulix/fireplace">Fireplace</a>
@@ -162,9 +173,9 @@
 <li>The second Wayland compositor written in Rust, it's goal is to be written completely in Rust including the Wayland implementation.</li>
 </ul>
 </li>
-<li><a href="https://swaywm.org/">Sway</a>
+<li><a href="https://swaywm.org/">sway</a>
 <ul>
-<li>A clone of i3 by sircmpwn, the first popular tiling Wayland compositor. Because of Sway wlroots was made.</li>
+<li>A clone of i3 by Drew Devault, the first popular tiling Wayland compositor. The wlroots project is overseen by sway.</li>
 </ul>
 </li>
 <li><a href="https://userbase.kde.org/KWin">KWin</a>
@@ -172,16 +183,23 @@
 <li>The KDE Wayland compositor, is the direct continuation of the X11 Plasma desktop (which is deprecated).</li>
 </ul>
 </li>
-<li><a href="https://gitlab.gnome.org/GNOME/mutter">Mutter</a>
+<li><a href="https://gitlab.gnome.org/GNOME/mutter">mutter</a>
 <ul>
 <li>The Gnome Wayland compositor, is the direct continuation of the X11 Gnome desktop (which is deprecated).</li>
 </ul>
 </li>
 </ul>
-<p>These compositors will be mentioned either because I know them well enough to draw experience and stories from in order to help educate you (such as in Way Cooler's case), because they are doing something unique (in Fireplace's case) or because they made meaningful or politically significant decisions that have impacted the ecosystem (Sway, Mutter, and KWin).</p>
-<a class="header" href="#prerequisites-to-reading-this-book" id="prerequisites-to-reading-this-book"><h2>Prerequisites to reading this book</h2></a>
-<p>You should know how to program in Rust. You should have the latest stable version of Rust, any edition.</p>
-<p>You should also be able to read C. Even though there will be no C in this book most of the Wayland ecosystem, including the reference implementation and wlroots (the framework we will be using), is written in C.</p>
+<p>These compositors will be mentioned either because I know them well enough to
+draw experience and stories from in order to help educate you (such as in Way
+Cooler's case), because they are doing something unique (in Fireplace's case) or
+because they made meaningful or politically significant decisions that have
+impacted the ecosystem (sway, mutter, and KWin).</p>
+<a class="header" href="#prerequisites-for-understanding-reading-this-book" id="prerequisites-for-understanding-reading-this-book"><h2>Prerequisites for understanding reading this book</h2></a>
+<p>You should know how to program in Rust. You should have the latest stable
+version of Rust, any edition.</p>
+<p>You should also be able to read C. Even though there will be no C in this book
+most of the Wayland ecosystem, including the reference implementation and
+wlroots (the framework we will be using), is written in C.</p>
 
                     </main>
 

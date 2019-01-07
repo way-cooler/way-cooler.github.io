@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html" class="active"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li></ol>
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html" class="active"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -137,21 +137,33 @@
                 <div id="content" class="content">
                     <main>
                         <a class="header" href="#hello-world" id="hello-world"><h1>Hello World</h1></a>
-<p>Each chapter's code contents will have its own folder with a name prefixed by the chapter number. For example, this chapter's code is stored in <code>1-hello-world/</code>. The code can be found <a href="https://github.com/swaywm/wlroots-rs/tree/book/how-to-make-a-wayland-compositor/src/">here</a>.</p>
-<p>The only dependency used, apart from the standard library, will be wlroots. A more useful compositor will want to use other libraries, but it is not done here in order to avoid choosing favorites while also being self contained and complete.</p>
+<p>Each chapter's code contents will have its own folder with a name prefixed by the chapter
+number. For example, this chapter's code is stored in <code>1-hello-world/</code>. The code
+can be found <a href="https://github.com/swaywm/wlroots-rs/tree/book/how-to-make-a-wayland-compositor/src/">here</a>.</p>
+<p>The only dependency used, apart from the standard library, will be wlroots. A
+more useful compositor will want to use other libraries, but it is not done here
+in order to avoid choosing favorites while also being self contained and complete.</p>
 <blockquote>
-<p>An important note to copy pasters: This document as well as the example code base is under the CC0 license.</p>
+<p>An important note to copy pasters: This document as well as the example code base
+is under the CC0 license.</p>
 <p>So copy and paste liberally, you can use this code as a jumping off point.</p>
-<p><strong>This does <em>not</em> apply to wlroots-rs or wlroots, both of which are under the MIT license.</strong></p>
+<p><strong>This does <em>not</em> apply to wlroots-rs or wlroots, both of which are under
+the MIT license.</strong></p>
 </blockquote>
 <a class="header" href="#boring-setup" id="boring-setup"><h2>Boring setup</h2></a>
-<p>wlroots-rs is in crates.io. If you want to install it, simply add this to your Cargo.toml:</p>
+<p>wlroots-rs is in crates.io. If you want to install it, simply add this to your
+Cargo.toml:</p>
 <pre><code class="language-toml">[dependencies]
 wlroots = {version = &quot;0.2&quot;, features = [&quot;unstable&quot;, &quot;static&quot;]}
 </code></pre>
-<p>The <code>&quot;unstable&quot;</code> feature flag enables the wlroots features whose API hasn't stabilized yet. For now, this is necessary to build a compositor. In the future this restriction will be gradually lifted as the library matures.</p>
-<p>The <code>&quot;static&quot;</code> feature flag statically links the wlroots library to the binary. This is optional, but encouraged since there's no stable ABI guarantee and it makes it easier to distribute the compositor to others.</p>
-<p>Because the library is changing constantly however, it is suggested you add it as a git submodule to your project instead of using crates.io.</p>
+<p>The <code>&quot;unstable&quot;</code> feature flag enables the wlroots features whose API hasn't
+stabilized yet. For now, this is necessary to build a compositor. In the future
+this restriction will be gradually lifted as the library matures.</p>
+<p>The <code>&quot;static&quot;</code> feature flag statically links the wlroots library to the binary.
+This is optional, but encouraged since there's no stable ABI guarantee and it
+makes it easier to distribute the compositor to others.</p>
+<p>Because the library is changing constantly however, it is suggested you add it
+as a git submodule to your project instead of using crates.io.</p>
 <a class="header" href="#a-minimal-compositor" id="a-minimal-compositor"><h2>A minimal compositor</h2></a>
 <p>Here is the smallest, simplest compositor you can make with wlroots:</p>
 <pre><pre class="playpen"><code class="language-rust">extern crate wlroots;
@@ -163,13 +175,25 @@ fn main() {
     compositor::Builder::new().build_auto(()).run()
 }
 </code></pre></pre>
-<p>This compositor is useless. In fact, it's dangerously useless. However it's also very instructive considering how short it is.</p>
-<p>You can compile and run<sup>1</sup> the above in any existing X11 window manager or Wayland compositor and it will run in a nested window.<sup>2</sup> However if you run it in a separate TTY it will use the DRM backend. This is usually the backend that will be used when you're not testing the compositor. If you run this code on DRM, you can't escape the compositor. If you do this you will need to reboot to escape.</p>
-<p>Because no callbacks were set up for the events the compositor will just keep running forever doing nothing. You can't even switch TTYs because that's a feature that the compositor needs to implement itself.</p>
-<p>This example is a little silly, but it highlights just how much needs to be implemented -- our compositor can't even shut itself off.</p>
+<p>This compositor is useless. In fact, it's dangerously useless. However it's also
+very instructive considering how short it is.</p>
+<p>You can compile and run<sup>1</sup> the above in any existing X11 window manager
+or Wayland compositor and it will run in a nested window.<sup>2</sup> However if
+you run it in a separate TTY it will use the DRM backend. This is usually the
+backend that will be used when you're not testing the compositor. If you run
+this code on DRM, you can't escape the compositor. If you do this you will need
+to reboot to escape.</p>
+<p>Because no callbacks were set up for the events the compositor will just keep
+running forever doing nothing. You can't even switch TTYs because that's a
+feature that the compositor needs to implement itself.</p>
+<p>This example is a little silly, but it highlights just how much needs to be
+implemented -- our compositor can't even shut itself off.</p>
 <hr />
-<p><sup>1</sup> If you are running on a system with systemd and have the feature enabled (it is by default) it should &quot;just work&quot;. If not, you'll need set the setuid bit on the binary with <code>chmod u+s</code>.</p>
-<p><sup>2</sup> This is a wlroots feature that is built into the <code>build_auto</code> function. It is very useful for debugging.</p>
+<p><sup>1</sup> If you are running on a system with systemd and have the feature
+enabled (it is by default) it should &quot;just work&quot;. If not, you'll need set the
+setuid bit on the binary with <code>chmod u+s</code>.</p>
+<p><sup>2</sup> This is a wlroots feature that is built into the <code>build_auto</code>
+function. It is very useful for debugging.</p>
 
                     </main>
 

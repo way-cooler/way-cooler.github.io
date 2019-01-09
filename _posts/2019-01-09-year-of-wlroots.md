@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Year of wlroots
-date: 2019-01-08
+date: 2019-01-09
 category: blog
 ---
 # Way Cooler

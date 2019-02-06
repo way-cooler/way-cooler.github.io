@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["server_decoration",""]]});
+initSidebarItems({"mod":[["gamma_control",""],["server_decoration",""]]});

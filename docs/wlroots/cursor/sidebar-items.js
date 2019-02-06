@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["xcursor","Wrappers around the XCursor library used by wlroots."]],"struct":[["Handle",""]],"trait":[["Handler",""]]});
+initSidebarItems({"mod":[["xcursor","Wrappers around the XCursor library used by wlroots."]],"struct":[["Cursor",""],["Handle",""]],"trait":[["Handler",""]]});

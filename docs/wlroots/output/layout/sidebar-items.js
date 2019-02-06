@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Handle","A handle to an `output::layout::Layout`."],["Output","The coordinate information of an `output::Output` within an `output::layout::Layout`."]],"trait":[["Handler",""]]});
+initSidebarItems({"struct":[["Handle","A handle to an `output::layout::Layout`."],["Layout",""],["Output","The coordinate information of an `output::Output` within an `output::layout::Layout`."]],"trait":[["Handler",""]]});

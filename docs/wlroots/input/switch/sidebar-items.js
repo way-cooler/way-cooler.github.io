@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["event",""]],"struct":[["Switch",""]],"trait":[["Handler",""]],"type":[["Handle",""]]});

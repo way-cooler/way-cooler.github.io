@@ -32,7 +32,10 @@
     </head>
     <body class="light">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "";</script>
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -54,7 +57,7 @@
         <script type="text/javascript">
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
-            if (theme === null || theme === undefined) { theme = 'light'; }
+            if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
         </script>
@@ -72,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html" class="active"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li></ol>
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html" class="active"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li><li><a href="getting_to_the_point.html"><strong aria-hidden="true">3.</strong> Getting to the point</a></li><li><ol class="section"><li><a href="basic_output_cursor.html"><strong aria-hidden="true">3.1.</strong> A basic cursor</a></li><li><a href="wlr_cursor.html"><strong aria-hidden="true">3.2.</strong> A better cursor</a></li><li><a href="getting_to_the_point_exercises.html"><strong aria-hidden="true">3.3.</strong> Exercises</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -89,7 +92,7 @@
                                 <i class="fa fa-paint-brush"></i>
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -108,6 +111,7 @@
                             <a href="print.html" title="Print this book" aria-label="Print this book">
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -174,9 +178,12 @@ ensure the <code>Handle</code> is valid.</p>
 them much easier to use:
 <a href="http://way-cooler.org/docs/wlroots/macro.with_handles.html">with_handles</a>
 and <a href="http://way-cooler.org/docs/wlroots_dehandle/macro.wlroots_dehandle.html">wlroots_dehandle</a>.
-Either, or neither, can be used. They are only implemented as a convenience.
-However, they will be used later in this book so you should learn them now.</p>
-<p>Please read <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html">the handle documentation in order to better understand Handles</a>.</p>
+Either, or neither, can be used. They are only implemented as a convenience.</p>
+<p>However, <code>wlroots_dehandle</code> will be used later in this book since it is the
+most convenient way to use handles. <a href="http://way-cooler.org/docs/wlroots_dehandle/macro.wlroots_dehandle.html">So please read its
+documentation</a>.</p>
+<p>Please read <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html">the handle documentation in order to better understand
+Handles</a>.</p>
 </blockquote>
 <a class="header" href="#accessing-the-session-from-the-compositor" id="accessing-the-session-from-the-compositor"><h2>Accessing the Session from the Compositor</h2></a>
 <p>A <code>Session</code> is <a href="http://way-cooler.org/docs/wlroots/backend/enum.Backend.html#method.get_session">obtained from a

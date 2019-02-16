@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - </title>
+        <title>Getting to the point - </title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html" class="active">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li><li><a href="getting_to_the_point.html"><strong aria-hidden="true">3.</strong> Getting to the point</a></li><li><ol class="section"><li><a href="basic_output_cursor.html"><strong aria-hidden="true">3.1.</strong> A basic cursor</a></li><li><a href="wlr_cursor.html"><strong aria-hidden="true">3.2.</strong> A better cursor</a></li><li><a href="getting_to_the_point_exercises.html"><strong aria-hidden="true">3.3.</strong> Exercises</a></li></ol></li></ol>
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li><li><a href="getting_to_the_point.html" class="active"><strong aria-hidden="true">3.</strong> Getting to the point</a></li><li><ol class="section"><li><a href="basic_output_cursor.html"><strong aria-hidden="true">3.1.</strong> A basic cursor</a></li><li><a href="wlr_cursor.html"><strong aria-hidden="true">3.2.</strong> A better cursor</a></li><li><a href="getting_to_the_point_exercises.html"><strong aria-hidden="true">3.3.</strong> Exercises</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -140,79 +140,40 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#how-to-make-a-wayland-compositor-in-rust" id="how-to-make-a-wayland-compositor-in-rust"><h1>How to Make a Wayland Compositor (in Rust)</h1></a>
-<a class="header" href="#what-is-wayland" id="what-is-wayland"><h2>What is Wayland?</h2></a>
-<p>Wayland is the replacement for the X Window System, colloquially known as X11.</p>
-<p>It's recommended that you read <a href="https://wayland.freedesktop.org/">the official Wayland website</a>,
-specifically the FAQ, architecture, and documentation, to familiarize yourself with the project.
-You should also keep this in your back pocket as you read this book if you need
-clarification on any terminology or concepts you don't understand.</p>
-<a class="header" href="#what-is-a-wayland-compositor" id="what-is-a-wayland-compositor"><h2>What is a Wayland Compositor?</h2></a>
-<p>If you only learn one thing from this book, it should be that:</p>
-<p><strong>Wayland is not a compositor</strong></p>
-<p><strong>Wayland is not a window manager</strong></p>
-<p><strong>Wayland is not a display server</strong></p>
-<p>Rather, <strong>Wayland is a <em>protocol</em> for clients and compositors to speak to each other</strong></p>
-<p>In a typical X11 system, there are two necessary components: the X
-server and the window manager. The X server handles rendering and hardware
-interactions, and the window manager handles user interaction and window
-arrangement. Almost all X11 desktops use the Xorg server as the X server, and
-write their own window managers to provide the design and behavior of their
-desktop. Gnome, KDE, i3, and AwesomeWM, for example, have a very different
-user experience but are all still based on the Xorg server. Fundamentally, the
-window manager is an X11 client like any other, and all X11 clients are able to
-interact with your desktop in the same way.</p>
-<p>A Wayland compositor is different. It is the sole source of authority
-on both rendering/hardware <em>and</em> window management. The right to arrange
-windows on screen and drive user interactions is reserved by the compositor.</p>
-<p>Here is a list of compositors that will be referenced later in this book:</p>
-<ul>
-<li><a href="http://way-cooler.org">Way Cooler</a>
-<ul>
-<li>Written by yours truly, Preston Carpenter. It was the first Wayland compositor written in Rust.</li>
-</ul>
-</li>
-<li><a href="https://github.com/Drakulix/fireplace">Fireplace</a>
-<ul>
-<li>The second Wayland compositor written in Rust, it's goal is to be written completely in Rust including the Wayland implementation.</li>
-</ul>
-</li>
-<li><a href="https://swaywm.org/">sway</a>
-<ul>
-<li>A clone of i3 by Drew Devault, the first popular tiling Wayland compositor. The wlroots project is overseen by sway.</li>
-</ul>
-</li>
-<li><a href="https://userbase.kde.org/KWin">KWin</a>
-<ul>
-<li>The KDE Wayland compositor, is the direct continuation of the X11 Plasma desktop (which is deprecated).</li>
-</ul>
-</li>
-<li><a href="https://gitlab.gnome.org/GNOME/mutter">mutter</a>
-<ul>
-<li>The Gnome Wayland compositor, is the direct continuation of the X11 Gnome desktop (which is deprecated).</li>
-</ul>
-</li>
-</ul>
-<p>These compositors will be mentioned either because I know them well enough to
-draw experience and stories from in order to help educate you (such as in Way
-Cooler's case), because they are doing something unique (in Fireplace's case) or
-because they made meaningful or politically significant decisions that have
-impacted the ecosystem (sway, mutter, and KWin).</p>
-<a class="header" href="#prerequisites-for-understanding-reading-this-book" id="prerequisites-for-understanding-reading-this-book"><h2>Prerequisites for understanding reading this book</h2></a>
-<p>You should know how to program in Rust. You should have the latest stable
-version of Rust, any edition.</p>
-<p>You should also be able to read C. Even though there will be no C in this book
-most of the Wayland ecosystem, including the reference implementation and
-wlroots (the framework we will be using), is written in C.</p>
+                        <a class="header" href="#getting-to-the-point" id="getting-to-the-point"><h1>Getting to the Point</h1></a>
+<p>Now that the compositor can be started and stopped successfully, it's about time
+that it actually starts doing what it's designed to do: composite some stuff.</p>
+<p>There are, generally speaking, two types of resources the compositor will
+render: contents of buffers owned by the compositor and contents of buffers
+owned by clients.</p>
+<p>Client provided buffers are more complicated to handle in general. They must
+synchronize their buffers with the compositor so that it can render without
+screen tearing. Clients can also damage only part of their buffers to reduce the
+amount of redrawing per frame. Because of this complexity, clients will be dealt
+with in a later chapter.</p>
+<p>Between different compositors the amount of compositor-owned buffers varies.
+For example, some compositors render their own background, status bars, and
+window decorations whilst others leave all that up to clients. Neither is more
+right or wrong than the other, but each leads to certain design trade-offs.</p>
+<p>However, at least among desktop compositors, there is at least one
+compositor owned object they all generally have to render: the cursor.</p>
+<p>As simple as that sounds, it's actually very complicated rendering a cursor
+correctly. Thankfully wlroots makes it much easier.</p>
+<p><a href="https://drewdevault.com/2018/07/17/Input-handling-in-wlroots.html">Suggested reading for an in-depth dive on how input handling works in
+wlroots</a>.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="goodbye_world_exercises.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="wlroots_introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="basic_output_cursor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -224,9 +185,13 @@ wlroots (the framework we will be using), is written in C.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="goodbye_world_exercises.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a href="wlroots_introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="basic_output_cursor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

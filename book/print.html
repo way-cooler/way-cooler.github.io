@@ -32,7 +32,10 @@
     </head>
     <body class="light">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "";</script>
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -54,7 +57,7 @@
         <script type="text/javascript">
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
-            if (theme === null || theme === undefined) { theme = 'light'; }
+            if (theme === null || theme === undefined) { theme = default_theme; }
             document.body.className = theme;
             document.querySelector('html').className = theme + ' js';
         </script>
@@ -72,7 +75,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li></ol>
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li><li><a href="getting_to_the_point.html"><strong aria-hidden="true">3.</strong> Getting to the point</a></li><li><ol class="section"><li><a href="basic_output_cursor.html"><strong aria-hidden="true">3.1.</strong> A basic cursor</a></li><li><a href="wlr_cursor.html"><strong aria-hidden="true">3.2.</strong> A better cursor</a></li><li><a href="getting_to_the_point_exercises.html"><strong aria-hidden="true">3.3.</strong> Exercises</a></li></ol></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -89,7 +92,7 @@
                                 <i class="fa fa-paint-brush"></i>
                             </button>
                             <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                                 <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -108,6 +111,7 @@
                             <a href="print.html" title="Print this book" aria-label="Print this book">
                                 <i id="print-button" class="fa fa-print"></i>
                             </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -843,9 +847,12 @@ ensure the <code>Handle</code> is valid.</p>
 them much easier to use:
 <a href="http://way-cooler.org/docs/wlroots/macro.with_handles.html">with_handles</a>
 and <a href="http://way-cooler.org/docs/wlroots_dehandle/macro.wlroots_dehandle.html">wlroots_dehandle</a>.
-Either, or neither, can be used. They are only implemented as a convenience.
-However, they will be used later in this book so you should learn them now.</p>
-<p>Please read <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html">the handle documentation in order to better understand Handles</a>.</p>
+Either, or neither, can be used. They are only implemented as a convenience.</p>
+<p>However, <code>wlroots_dehandle</code> will be used later in this book since it is the
+most convenient way to use handles. <a href="http://way-cooler.org/docs/wlroots_dehandle/macro.wlroots_dehandle.html">So please read its
+documentation</a>.</p>
+<p>Please read <a href="http://way-cooler.org/docs/wlroots/utils/struct.Handle.html">the handle documentation in order to better understand
+Handles</a>.</p>
 </blockquote>
 <a class="header" href="#accessing-the-session-from-the-compositor" id="accessing-the-session-from-the-compositor"><h2>Accessing the Session from the Compositor</h2></a>
 <p>A <code>Session</code> is <a href="http://way-cooler.org/docs/wlroots/backend/enum.Backend.html#method.get_session">obtained from a
@@ -905,6 +912,437 @@ plugged in then the key combination must all be done on the same keyboard.</p>
 <code>compositor::Builder</code>. The compositor can be
 <a href="http://way-cooler.org/docs/wlroots/compositor/struct.Compositor.html#method.downcast">downcasted</a>
 to this state.</p>
+<a class="header" href="#getting-to-the-point" id="getting-to-the-point"><h1>Getting to the Point</h1></a>
+<p>Now that the compositor can be started and stopped successfully, it's about time
+that it actually starts doing what it's designed to do: composite some stuff.</p>
+<p>There are, generally speaking, two types of resources the compositor will
+render: contents of buffers owned by the compositor and contents of buffers
+owned by clients.</p>
+<p>Client provided buffers are more complicated to handle in general. They must
+synchronize their buffers with the compositor so that it can render without
+screen tearing. Clients can also damage only part of their buffers to reduce the
+amount of redrawing per frame. Because of this complexity, clients will be dealt
+with in a later chapter.</p>
+<p>Between different compositors the amount of compositor-owned buffers varies.
+For example, some compositors render their own background, status bars, and
+window decorations whilst others leave all that up to clients. Neither is more
+right or wrong than the other, but each leads to certain design trade-offs.</p>
+<p>However, at least among desktop compositors, there is at least one
+compositor owned object they all generally have to render: the cursor.</p>
+<p>As simple as that sounds, it's actually very complicated rendering a cursor
+correctly. Thankfully wlroots makes it much easier.</p>
+<p><a href="https://drewdevault.com/2018/07/17/Input-handling-in-wlroots.html">Suggested reading for an in-depth dive on how input handling works in
+wlroots</a>.</p>
+<a class="header" href="#a-basic-cursor" id="a-basic-cursor"><h1>A basic cursor</h1></a>
+<p>There are two main problems that need to be solved to handle a single cursor on
+the screen:<sup>1</sup></p>
+<ol>
+<li>Keeping track of where the mouse is.</li>
+<li>Rendering the mouse where it is.</li>
+</ol>
+<p>The first problem can be solved with two numbers and an event listener. The
+second can be solved with <a href="ftp://www.x.org/pub/X11R7.7/doc/man/man3/Xcursor.3.xhtml">xcursor</a>.</p>
+<a class="header" href="#keeping-track-of-the-mouse" id="keeping-track-of-the-mouse"><h2>Keeping track of the mouse</h2></a>
+<p>In order to keep track of the mouse a new input device will need to be managed
+by the compositor. For this purpose wlroots provides a
+<a href="http://way-cooler.org/docs/wlroots/input/pointer/index.html">Pointer</a>. It
+abstracts over all types of common mouse input<sup>2</sup>, courtesy of libinput.</p>
+<p>Like Keyboard, a Pointer is instantiated using the input builder:</p>
+<pre><pre class="playpen"><code class="language-rust">struct PointerHandler;
+
+impl pointer::Handler for PointerHandler {
+    // By default, all events are ignored
+}
+
+fn pointer_added(_compositor_handle: compositor::Handle,
+                 _pointer_handle: pointer::Handle)
+                 -&gt; Option&lt;Box&lt;pointer::Handler&gt;&gt; {
+    Some(Box::new(PointerHandler))
+}
+
+
+fn main() {
+    let input_builder = wlroots::input::manager::Builder::default()
+        .pointer_added(pointer_added)
+    // Other setup elided...
+}
+</code></pre></pre>
+<p>The event that is emitted when the mouse is moved is <a href="http://way-cooler.org/docs/wlroots/input/pointer/event/struct.Motion.html">the motion
+event</a>.
+This event is provided in the <a href="http://way-cooler.org/docs/wlroots/input/pointer/trait.Handler.html#method.on_motion"><code>pointer::Handler::on_motion</code>
+callback</a>.
+This event provides deltas corresponding to the movement amount. By keeping a
+running sum, the absolute position of the mouse, in output coordinates, can be
+determined.</p>
+<blockquote>
+<a class="header" href="#different-coordinate-types" id="different-coordinate-types"><h1>Different coordinate types</h1></a>
+<p>Throughout this book different coordinate types will be used. Each coordinate
+is a number representing a position inside some viewport.</p>
+<p>The main types of coordinates used are:</p>
+<ol>
+<li>Output coordinates</li>
+<li>Output layout coordinates</li>
+<li>View coordinates</li>
+</ol>
+<p>They are generally distinguished in the docs and code by prepending a letter
+to the variable name. For example <code>lx</code> is the x position in relation to the
+output layout.</p>
+<p>The origin point will always be in the top left corner.</p>
+</blockquote>
+<p>The coordinates can be stored in the <code>PointerHandler</code> and updated on each event:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+struct PointerHandler {
+    /// The x coordinate in relation to the output.
+    ox: f64,
+    /// The y coordinate in relation to the output.
+    oy: f64
+}
+
+impl pointer::Handler for PointerHandler {
+    fn on_motion(&amp;mut self,
+                 compositor_handle: compositor::Handle,
+                 _pointer_handle: pointer::Handle,
+                 motion_event: &amp;pointer::event::Motion) {
+        let (delta_x, delta_y) = motion_event.delta();
+        self.x += delta_x;
+        self.y += delta_y;
+    }
+}
+#}</code></pre></pre>
+<a class="header" href="#rendering-a-mouse-with-xcursor" id="rendering-a-mouse-with-xcursor"><h2>Rendering a mouse with xcursor</h2></a>
+<p>Now that the mouse position can be tracked it's time to render it to the screen.</p>
+<p>The xcursor library doesn't render anything itself, it just provides images from
+the system. In a typical desktop environment the cursor changes its icon
+depending on what's under it, which requires a manager to keep track of all
+these types of images.</p>
+<p>In fact, in Wayland clients can dictate what the cursor looks like. When a
+client is receiving input from the mouse it can provide its own cursor image.
+Though the compositor is not obligated to use this mouse, it is common to do so.</p>
+<p>An <a href="http://way-cooler.org/docs/wlroots/cursor/xcursor/struct.Theme.html">xcursor
+theme</a> can
+be
+<a href="http://way-cooler.org/docs/wlroots/cursor/xcursor/struct.Theme.html#method.load_theme">loaded</a>
+at the start of the program and stored in the <code>CompositorState</code>.<sup>3</sup></p>
+<p>Now that the image has been obtained there needs to be something to render it
+onto. Thus far the compositor has not been aware of any outputs, beyond the auto
+detection it does during backend setup.</p>
+<a class="header" href="#outputs" id="outputs"><h3>Outputs</h3></a>
+<p>An <a href="http://way-cooler.org/docs/wlroots/output/struct.Output.html">Output</a>
+represents a rectangular view port on which clients and other content are
+rendered. Generally this means a monitor plugged into the computer, though if
+the Wayland or X11 backends are used then it will instead be a window as a
+client to the host system.</p>
+<p>Setting up an output is done in the same as setting up an input. There is only
+one crucial difference: when setting up an output there needs to be a <a href="http://way-cooler.org/docs/wlroots/output/struct.Builder.html">mode set
+for the output using the builder passed into the
+function</a>.</p>
+<pre><pre class="playpen"><code class="language-rust">struct OutputHandler;
+
+impl output::Handler for OutputHandler {}
+
+    fn output_added&lt;'output&gt;(compositor: compositor::Handle,
+                             builder: output::Builder&lt;'output&gt;)
+                             -&gt; Option&lt;output::BuilderResult&lt;'output&gt;&gt; {
+    Some(builder.build_best_mode(OutputHandler))
+}
+
+fn main() {
+    let output_builder = wlroots::output::manager::Builder::default()
+        .output_added(output_added);
+    let compositor = compositor::Builder::new()
+        .gles2(true)
+        .input_manager(input_builder)
+        .output_manager(output_builder)
+}
+</code></pre></pre>
+<p>Rendering is done in the <a href="http://way-cooler.org/docs/wlroots/output/trait.Handler.html#method.on_frame">on frame
+callback</a>,
+however for cursors this is not necessary. wlroots provides a special <a href="http://way-cooler.org/docs/wlroots/output/struct.Cursor.html">output
+cursor</a> which
+abstracts over rendering a cursor. This is because many backends support
+&quot;hardware&quot; cursors. This is a feature provided by GPUs that allow moving a
+cursor around the screen without redrawing anything underneath it.</p>
+<p>If hardware cursors aren't supported the <code>output::Cursor</code> will revert to using
+software cursors automatically.</p>
+<p>Using this new type this is a complete basic cursor implementation with wlroots:</p>
+<pre><pre class="playpen"><code class="language-rust">struct OutputHandler;
+
+impl output::Handler for OutputHandler {}
+
+#[wlroots_dehandle]
+fn output_added&lt;'output&gt;(compositor: compositor::Handle,
+                         builder: output::Builder&lt;'output&gt;)
+                         -&gt; Option&lt;output::BuilderResult&lt;'output&gt;&gt; {
+    let result = builder.build_best_mode(OutputHandler);
+    {
+        #[dehandle] let compositor = compositor;
+        #[dehandle] let output = &amp;result.output;
+        let state: &amp;mut CompositorState = compositor.downcast();
+        let mut cursor = output::Cursor::new(output)
+            .expect(&quot;Could not create output cursor&quot;);
+        let xcursor = state.theme.get_cursor(&quot;left_ptr&quot;.into())
+            .expect(&quot;Could not load default cursor set&quot;);
+        let image: wlroots::render::Image = xcursor.image(0)
+            .expect(&quot;xcursor had no images&quot;).into();
+        cursor.set_image(&amp;image)
+            .expect(&quot;Could not set cursor image&quot;);
+        state.cursor = Some(cursor);
+    }
+    Some(result)
+}
+
+struct PointerHandler;
+
+impl pointer::Handler for PointerHandler {
+    #[wlroots_dehandle]
+    fn on_motion(&amp;mut self,
+                 compositor_handle: compositor::Handle,
+                 _pointer_handle: pointer::Handle,
+                 motion_event: &amp;pointer::event::Motion) {
+        #[dehandle] let compositor = compositor_handle;
+        let &amp;mut CompositorState { ref mut cursor, .. } = compositor.downcast();
+        if let Some(cursor) = cursor.as_mut() {
+            let (delta_x, delta_y) = motion_event.delta();
+            let (cur_x, cur_y) = cursor.coords();
+            cursor.move_relative(cur_x + delta_x, cur_y + delta_y)
+                .expect(&quot;Could not move cursor&quot;);
+        }
+    }
+}
+
+
+fn pointer_added(_compositor_handle: compositor::Handle,
+                 _pointer_handle: pointer::Handle)
+                 -&gt; Option&lt;Box&lt;pointer::Handler&gt;&gt; {
+    Some(Box::new(PointerHandler))
+}
+
+struct CompositorState {
+    theme: xcursor::Theme,
+    cursor: Option&lt;wlroots::output::Cursor&gt;
+}
+
+fn main() {
+    init_logging(WLR_DEBUG, None);
+    let theme = xcursor::Theme::load_theme(None, 16)
+        .expect(&quot;Could not create xcursor manager&quot;);
+    let output_builder = wlroots::output::manager::Builder::default()
+        .output_added(output_added);
+    let input_builder = wlroots::input::manager::Builder::default()
+        .pointer_added(pointer_added)
+        .keyboard_added(keyboard_added);
+    let compositor = compositor::Builder::new()
+        .gles2(true)
+        .input_manager(input_builder)
+        .output_manager(output_builder)
+        .build_auto(CompositorState { theme, cursor: None });
+    compositor.run();
+}
+</code></pre></pre>
+<blockquote>
+<a class="header" href="#box-of-the-socratic-teaching-style" id="box-of-the-socratic-teaching-style"><h1>Box of the Socratic Teaching Style</h1></a>
+<p>Before continuing, I suggest you think for a moment on some complications or
+desirable features we ignored in this design. Try using the above example
+yourself and see if there's any bugs in it.</p>
+<p>When considering features for your compositor, it's important to consider
+setups different from your own, which can help ensure your compositor is
+flexible enough to withstand the &quot;real world&quot;.</p>
+</blockquote>
+<a class="header" href="#problems-with-this-approach" id="problems-with-this-approach"><h2>Problems with this approach</h2></a>
+<p>Unfortunately, this is a very bad solution to the problem. One problem that's
+obvious if the above example is tried is that there are no bounds checks for
+when the cursor goes outside the output.</p>
+<p>Another problem, which is more difficult to solve, is when multiple outputs are
+connected. When this happens only the last one gets a cursor and the others are
+inaccessible. This is because each output is its own buffer and have no relation
+to the others. So a relationship between outputs must be establish where it's
+possible to &quot;move&quot; to another output when the edge of another is reached.</p>
+<p>Finally, this solution also doesn't address how to react to drawing tablets or
+touch screens.</p>
+<p>These problems are all very complicated, not to mention very boring. In order to
+solve them wlroots provides two semi-connected abstractions: a
+<a href="http://way-cooler.org/docs/wlroots/cursor/struct.Cursor.html">Cursor</a> and a
+<a href="http://way-cooler.org/docs/wlroots/output/layout/struct.Layout.html">Layout</a>.</p>
+<hr />
+<p><sup>1</sup> Note that in Wayland there are no restrictions on the number of
+cursors. Multiple cursors can be rendered at the same time and can be controlled
+by any number of other input devices (including fake ones).</p>
+<p><sup>2</sup> Non-exhaustive list: common two/three button mice, multi-button
+mice, trackpoints, touchpads, and trackballs.</p>
+<p><sup>3</sup> Generally a <a href="http://way-cooler.org/docs/wlroots/cursor/xcursor/struct.Manager.html">theme
+manager</a>
+is used to generate these themes, but this will be ignored for now.</p>
+<a class="header" href="#setting-up-a-cursor-and-an-outputlayout" id="setting-up-a-cursor-and-an-outputlayout"><h1>Setting up a <code>Cursor</code> and an <code>output::Layout</code></h1></a>
+<p>A <code>Cursor</code> can be <a href="http://way-cooler.org/docs/wlroots/cursor/struct.Cursor.html#method.create">created at any
+time</a>.
+Cursors use handles just like all resources provided in wlroots callbacks, so to
+use the rest of the methods it must be upgraded.<sup>1</sup></p>
+<p>A <code>Cursor</code> can be
+<a href="http://way-cooler.org/docs/wlroots/cursor/struct.Cursor.html#method.attach_output_layout">attached</a>
+to an <code>output::Layout</code> which will constrain the input to remain within the
+region. The layout also keeps track of where the outputs are in relation to each
+other, so when the cursor reaches the edge of two outputs it will automatically
+warp to the next one.</p>
+<p>An <code>output::Layout</code> can be <a href="http://way-cooler.org/docs/wlroots/output/layout/struct.Layout.html#method.create">created just like a
+<code>Cursor</code></a>.</p>
+<p>Here is the new compositor setup code that uses <code>Cursor</code>, <code>output::Layout</code>, and
+<code>xcursor::Manager</code><sup>2</sup>:</p>
+<pre><pre class="playpen"><code class="language-rust">pub struct CompositorState {
+    xcursor_manager: wlroots::cursor::xcursor::Manager,
+    cursor_handle: wlroots::cursor::Handle,
+    output_layout_handle: wlroots::output::layout::Handle
+}
+
+fn main() {
+    init_logging(WLR_DEBUG, None);
+    let compositor_state = setup_compositor_state();
+    let output_builder = wlroots::output::manager::Builder::default()
+        .output_added(output_added);
+    let input_builder = wlroots::input::manager::Builder::default()
+        .pointer_added(pointer_added)
+        .keyboard_added(keyboard_added);
+    let compositor = compositor::Builder::new()
+        .input_manager(input_builder)
+        .output_manager(output_builder)
+        .build_auto(compositor_state);
+    compositor.run();
+}
+
+#[wlroots_dehandle]
+pub fn setup_compositor_state() -&gt; CompositorState {
+    use wlroots::{cursor::{Cursor, xcursor},
+                  output::layout::Layout};
+    use crate::{pointer::CursorHandler, output::LayoutHandler};
+    let output_layout_handle = Layout::create(Box::new(LayoutHandler));
+    let cursor_handle = Cursor::create(Box::new(CursorHandler));
+    let xcursor_manager = xcursor::Manager::create(&quot;default&quot;.to_string(), 24)
+        .expect(&quot;Could not create xcursor manager&quot;);
+    xcursor_manager.load(1.0);
+    #[dehandle] let output_layout = output_layout_handle.clone();
+    #[dehandle] let cursor = cursor_handle.clone();
+    cursor.attach_output_layout(output_layout);
+    CompositorState { xcursor_manager,
+                      cursor_handle,
+                      output_layout_handle }
+}
+</code></pre></pre>
+<a class="header" href="#using-outputlayout" id="using-outputlayout"><h1>Using <code>output::Layout</code></h1></a>
+<p>Outputs can be <a href="http://way-cooler.org/docs/wlroots/output/layout/struct.Layout.html#method.add_auto">added to the layout with
+<code>Layout::add_auto</code></a>
+once they are advertised to the compositor:<sup>3</sup> This will allow the
+cursor to warp to the next output when the edge is reached between two outputs
+in the output layout coordinate space.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[wlroots_dehandle]
+pub fn output_added&lt;'output&gt;(compositor: compositor::Handle,
+                             builder: output::Builder&lt;'output&gt;)
+                             -&gt; Option&lt;output::BuilderResult&lt;'output&gt;&gt; {
+    let result = builder.build_best_mode(OutputHandler);
+    #[dehandle] let compositor = compositor;
+    let CompositorState { ref output_layout_handle, .. } = compositor.downcast();
+    #[dehandle] let output = result.output.clone();
+    #[dehandle] let output_layout = output_layout_handle;
+    output_layout.add_auto(output);
+    Some(result)
+}
+#}</code></pre></pre>
+<a class="header" href="#moving-the-pointer" id="moving-the-pointer"><h1>Moving the <code>Pointer</code></h1></a>
+<p>There is no longer any need to keep track of the current pointer location. This
+is tracked by the <code>Cursor</code> and can be updated using <code>move_relative</code> and <code>warp</code>.</p>
+<p>We also should update the cursor image when a pointer is added so that the
+correct state can be rendered.</p>
+<p>Finally here is the code that updates the cursor when the pointer moves:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub struct PointerHandler;
+
+impl pointer::Handler for PointerHandler {
+    /// Triggered when the pointer is moved on the Wayland and X11 backends.
+    #[wlroots_dehandle]
+    fn on_motion_absolute(&amp;mut self,
+                          compositor_handle: compositor::Handle,
+                          _pointer_handle: pointer::Handle,
+                          absolute_motion_event: &amp;pointer::event::AbsoluteMotion) {
+        #[dehandle] let compositor = compositor_handle;
+        let &amp;mut CompositorState { ref cursor_handle, .. } = compositor.downcast();
+        #[dehandle] let cursor = cursor_handle;
+        let (x, y) = absolute_motion_event.pos();
+        cursor.warp_absolute(absolute_motion_event.device(), x, y);
+    }
+
+    #[wlroots_dehandle]
+    /// Triggered when the pointer is moved in the DRM backend.
+    fn on_motion(&amp;mut self,
+                 compositor_handle: compositor::Handle,
+                 _pointer_handle: pointer::Handle,
+                 motion_event: &amp;pointer::event::Motion) {
+        #[dehandle] let compositor = compositor_handle;
+        let &amp;mut CompositorState { ref cursor_handle, .. } = compositor.downcast();
+        #[dehandle] let cursor = cursor_handle;
+        let (delta_x, delta_y) = motion_event.delta();
+        cursor.move_to(None, delta_x, delta_y);
+    }
+}
+
+#[wlroots_dehandle]
+pub fn pointer_added(compositor_handle: compositor::Handle,
+                     pointer_handle: pointer::Handle)
+                     -&gt; Option&lt;Box&lt;pointer::Handler&gt;&gt; {
+    #[dehandle] let compositor = compositor_handle;
+    #[dehandle] let pointer = pointer_handle;
+    let CompositorState { ref cursor_handle, ref mut xcursor_manager,
+                          .. } = compositor.downcast();
+    #[dehandle] let cursor = cursor_handle;
+    xcursor_manager.set_cursor_image(&quot;left_ptr&quot;.to_string(), cursor);
+    cursor.attach_input_device(pointer.input_device());
+    Some(Box::new(PointerHandler) as Box&lt;pointer::Handler&gt;)
+}
+#}</code></pre></pre>
+<hr />
+<p><sup>1</sup> Unlike most resources in wlroots, <code>Cursor</code> lifetimes are entirely
+dictated by your code. It will hang around until you <a href="http://way-cooler.org/docs/wlroots/cursor/struct.Handle.html#method.destroy">destroy
+it</a>.
+However, it acts like the other resources for consistency and because their
+lifetimes are tied to other resources. There are two other types like this:
+<a href="http://way-cooler.org/docs/wlroots/output/layout/struct.Layout.html"><code>output::Layout</code></a>
+and <a href="http://way-cooler.org/docs/wlroots/seat/struct.Seat.html"><code>Seat</code></a>.</p>
+<p><sup>2</sup> Since the code is getting very long large parts of it will be
+elided going forward. The full source can always be found <a href="https://github.com/swaywm/wlroots-rs/tree/master/how-to-make-a-wayland-compositor/src">in the book
+repo</a>.</p>
+<p><sup>3</sup> Normally you'd want to <a href="http://way-cooler.org/docs/wlroots/output/layout/struct.Layout.html#method.add">add the output at a specific
+point</a>
+in the layout. However this requires user configuration, which is out of the
+scope of this book. Currently there is no xrandr equivalent for Wayland.</p>
+<a class="header" href="#exercises-2" id="exercises-2"><h1>Exercises</h1></a>
+<a class="header" href="#one-cursor-per-output" id="one-cursor-per-output"><h2>One Cursor Per Output</h2></a>
+<p>If you have multiple outputs lets do something a little different.</p>
+<p>Instead of storing the <code>cursor::Handle</code> in <code>CompositorState</code> try storing it in
+the <code>OutputHandler</code>. This will give each output its own cursor. You should add a
+keybinding to switch what the &quot;current&quot; one is.</p>
+<a class="header" href="#multiple-input-cursors" id="multiple-input-cursors"><h2>Multiple Input Cursors</h2></a>
+<p>If you have multiple input devices hanging around then lets get a little crazy.</p>
+<p>Instead of storing the <code>cursor::Handle</code> in <code>CompositorState</code> try storing it in
+the <code>PointerHandler</code>. This will allow each pointer to have its own, separate
+cursor.</p>
+<a class="header" href="#configuring-outputs" id="configuring-outputs"><h2>Configuring Outputs</h2></a>
+<p>If you have multiple outputs you probably noticed that the cursor can reach
+across all of them. However, it is probably not going across the correct edge
+since wlroots has no way to know how the monitors are physically set up in the
+world.</p>
+<p>Using <a href="http://way-cooler.org/docs/wlroots/output/layout/struct.Layout.html#method.add">the non-auto functions in
+<code>output::Layout</code></a>,
+and a configuration description of your choice make it possible for the user to
+set up their outputs how they like.</p>
+<blockquote>
+<p>Without endorsing any particular configuration format, it is suggested that
+you nevertheless use <a href="https://github.com/serde-rs/serde">serde</a> as that is
+the standard way in Rust to encode and decode arbitrary formats.</p>
+</blockquote>
 
                     </main>
 

@@ -1,0 +1,444 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>A basic cursor - </title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="wayland_introduction.html">Introduction</a></li><li class="affix"><a href="wlroots_introduction.html">Introduction to wlroots</a></li><li><a href="hello_world.html"><strong aria-hidden="true">1.</strong> Hello World</a></li><li><ol class="section"><li><a href="hello_world_analyze.html"><strong aria-hidden="true">1.1.</strong> Analyzing the code</a></li><li><a href="hello_world_output.html"><strong aria-hidden="true">1.2.</strong> Analyzing the Wayland protocol</a></li><li><a href="hello_world_exercises.html"><strong aria-hidden="true">1.3.</strong> Exercises</a></li></ol></li><li><a href="goodbye_world.html"><strong aria-hidden="true">2.</strong> Goodbye World</a></li><li><ol class="section"><li><a href="goodbye_world_shutdown.html"><strong aria-hidden="true">2.1.</strong> A graceful shutdown</a></li><li><a href="goodbye_world_tty_switching.html"><strong aria-hidden="true">2.2.</strong> TTY switching</a></li><li><a href="goodbye_world_exercises.html"><strong aria-hidden="true">2.3.</strong> Exercises</a></li></ol></li><li><a href="getting_to_the_point.html"><strong aria-hidden="true">3.</strong> Getting to the point</a></li><li><ol class="section"><li><a href="basic_output_cursor.html" class="active"><strong aria-hidden="true">3.1.</strong> A basic cursor</a></li><li><a href="wlr_cursor.html"><strong aria-hidden="true">3.2.</strong> A better cursor</a></li><li><a href="getting_to_the_point_exercises.html"><strong aria-hidden="true">3.3.</strong> Exercises</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title"></h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#a-basic-cursor" id="a-basic-cursor"><h1>A basic cursor</h1></a>
+<p>There are two main problems that need to be solved to handle a single cursor on
+the screen:<sup>1</sup></p>
+<ol>
+<li>Keeping track of where the mouse is.</li>
+<li>Rendering the mouse where it is.</li>
+</ol>
+<p>The first problem can be solved with two numbers and an event listener. The
+second can be solved with <a href="ftp://www.x.org/pub/X11R7.7/doc/man/man3/Xcursor.3.xhtml">xcursor</a>.</p>
+<a class="header" href="#keeping-track-of-the-mouse" id="keeping-track-of-the-mouse"><h2>Keeping track of the mouse</h2></a>
+<p>In order to keep track of the mouse a new input device will need to be managed
+by the compositor. For this purpose wlroots provides a
+<a href="http://way-cooler.org/docs/wlroots/input/pointer/index.html">Pointer</a>. It
+abstracts over all types of common mouse input<sup>2</sup>, courtesy of libinput.</p>
+<p>Like Keyboard, a Pointer is instantiated using the input builder:</p>
+<pre><pre class="playpen"><code class="language-rust">struct PointerHandler;
+
+impl pointer::Handler for PointerHandler {
+    // By default, all events are ignored
+}
+
+fn pointer_added(_compositor_handle: compositor::Handle,
+                 _pointer_handle: pointer::Handle)
+                 -&gt; Option&lt;Box&lt;pointer::Handler&gt;&gt; {
+    Some(Box::new(PointerHandler))
+}
+
+
+fn main() {
+    let input_builder = wlroots::input::manager::Builder::default()
+        .pointer_added(pointer_added)
+    // Other setup elided...
+}
+</code></pre></pre>
+<p>The event that is emitted when the mouse is moved is <a href="http://way-cooler.org/docs/wlroots/input/pointer/event/struct.Motion.html">the motion
+event</a>.
+This event is provided in the <a href="http://way-cooler.org/docs/wlroots/input/pointer/trait.Handler.html#method.on_motion"><code>pointer::Handler::on_motion</code>
+callback</a>.
+This event provides deltas corresponding to the movement amount. By keeping a
+running sum, the absolute position of the mouse, in output coordinates, can be
+determined.</p>
+<blockquote>
+<a class="header" href="#different-coordinate-types" id="different-coordinate-types"><h1>Different coordinate types</h1></a>
+<p>Throughout this book different coordinate types will be used. Each coordinate
+is a number representing a position inside some viewport.</p>
+<p>The main types of coordinates used are:</p>
+<ol>
+<li>Output coordinates</li>
+<li>Output layout coordinates</li>
+<li>View coordinates</li>
+</ol>
+<p>They are generally distinguished in the docs and code by prepending a letter
+to the variable name. For example <code>lx</code> is the x position in relation to the
+output layout.</p>
+<p>The origin point will always be in the top left corner.</p>
+</blockquote>
+<p>The coordinates can be stored in the <code>PointerHandler</code> and updated on each event:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+struct PointerHandler {
+    /// The x coordinate in relation to the output.
+    ox: f64,
+    /// The y coordinate in relation to the output.
+    oy: f64
+}
+
+impl pointer::Handler for PointerHandler {
+    fn on_motion(&amp;mut self,
+                 compositor_handle: compositor::Handle,
+                 _pointer_handle: pointer::Handle,
+                 motion_event: &amp;pointer::event::Motion) {
+        let (delta_x, delta_y) = motion_event.delta();
+        self.x += delta_x;
+        self.y += delta_y;
+    }
+}
+#}</code></pre></pre>
+<a class="header" href="#rendering-a-mouse-with-xcursor" id="rendering-a-mouse-with-xcursor"><h2>Rendering a mouse with xcursor</h2></a>
+<p>Now that the mouse position can be tracked it's time to render it to the screen.</p>
+<p>The xcursor library doesn't render anything itself, it just provides images from
+the system. In a typical desktop environment the cursor changes its icon
+depending on what's under it, which requires a manager to keep track of all
+these types of images.</p>
+<p>In fact, in Wayland clients can dictate what the cursor looks like. When a
+client is receiving input from the mouse it can provide its own cursor image.
+Though the compositor is not obligated to use this mouse, it is common to do so.</p>
+<p>An <a href="http://way-cooler.org/docs/wlroots/cursor/xcursor/struct.Theme.html">xcursor
+theme</a> can
+be
+<a href="http://way-cooler.org/docs/wlroots/cursor/xcursor/struct.Theme.html#method.load_theme">loaded</a>
+at the start of the program and stored in the <code>CompositorState</code>.<sup>3</sup></p>
+<p>Now that the image has been obtained there needs to be something to render it
+onto. Thus far the compositor has not been aware of any outputs, beyond the auto
+detection it does during backend setup.</p>
+<a class="header" href="#outputs" id="outputs"><h3>Outputs</h3></a>
+<p>An <a href="http://way-cooler.org/docs/wlroots/output/struct.Output.html">Output</a>
+represents a rectangular view port on which clients and other content are
+rendered. Generally this means a monitor plugged into the computer, though if
+the Wayland or X11 backends are used then it will instead be a window as a
+client to the host system.</p>
+<p>Setting up an output is done in the same as setting up an input. There is only
+one crucial difference: when setting up an output there needs to be a <a href="http://way-cooler.org/docs/wlroots/output/struct.Builder.html">mode set
+for the output using the builder passed into the
+function</a>.</p>
+<pre><pre class="playpen"><code class="language-rust">struct OutputHandler;
+
+impl output::Handler for OutputHandler {}
+
+    fn output_added&lt;'output&gt;(compositor: compositor::Handle,
+                             builder: output::Builder&lt;'output&gt;)
+                             -&gt; Option&lt;output::BuilderResult&lt;'output&gt;&gt; {
+    Some(builder.build_best_mode(OutputHandler))
+}
+
+fn main() {
+    let output_builder = wlroots::output::manager::Builder::default()
+        .output_added(output_added);
+    let compositor = compositor::Builder::new()
+        .gles2(true)
+        .input_manager(input_builder)
+        .output_manager(output_builder)
+}
+</code></pre></pre>
+<p>Rendering is done in the <a href="http://way-cooler.org/docs/wlroots/output/trait.Handler.html#method.on_frame">on frame
+callback</a>,
+however for cursors this is not necessary. wlroots provides a special <a href="http://way-cooler.org/docs/wlroots/output/struct.Cursor.html">output
+cursor</a> which
+abstracts over rendering a cursor. This is because many backends support
+&quot;hardware&quot; cursors. This is a feature provided by GPUs that allow moving a
+cursor around the screen without redrawing anything underneath it.</p>
+<p>If hardware cursors aren't supported the <code>output::Cursor</code> will revert to using
+software cursors automatically.</p>
+<p>Using this new type this is a complete basic cursor implementation with wlroots:</p>
+<pre><pre class="playpen"><code class="language-rust">struct OutputHandler;
+
+impl output::Handler for OutputHandler {}
+
+#[wlroots_dehandle]
+fn output_added&lt;'output&gt;(compositor: compositor::Handle,
+                         builder: output::Builder&lt;'output&gt;)
+                         -&gt; Option&lt;output::BuilderResult&lt;'output&gt;&gt; {
+    let result = builder.build_best_mode(OutputHandler);
+    {
+        #[dehandle] let compositor = compositor;
+        #[dehandle] let output = &amp;result.output;
+        let state: &amp;mut CompositorState = compositor.downcast();
+        let mut cursor = output::Cursor::new(output)
+            .expect(&quot;Could not create output cursor&quot;);
+        let xcursor = state.theme.get_cursor(&quot;left_ptr&quot;.into())
+            .expect(&quot;Could not load default cursor set&quot;);
+        let image: wlroots::render::Image = xcursor.image(0)
+            .expect(&quot;xcursor had no images&quot;).into();
+        cursor.set_image(&amp;image)
+            .expect(&quot;Could not set cursor image&quot;);
+        state.cursor = Some(cursor);
+    }
+    Some(result)
+}
+
+struct PointerHandler;
+
+impl pointer::Handler for PointerHandler {
+    #[wlroots_dehandle]
+    fn on_motion(&amp;mut self,
+                 compositor_handle: compositor::Handle,
+                 _pointer_handle: pointer::Handle,
+                 motion_event: &amp;pointer::event::Motion) {
+        #[dehandle] let compositor = compositor_handle;
+        let &amp;mut CompositorState { ref mut cursor, .. } = compositor.downcast();
+        if let Some(cursor) = cursor.as_mut() {
+            let (delta_x, delta_y) = motion_event.delta();
+            let (cur_x, cur_y) = cursor.coords();
+            cursor.move_relative(cur_x + delta_x, cur_y + delta_y)
+                .expect(&quot;Could not move cursor&quot;);
+        }
+    }
+}
+
+
+fn pointer_added(_compositor_handle: compositor::Handle,
+                 _pointer_handle: pointer::Handle)
+                 -&gt; Option&lt;Box&lt;pointer::Handler&gt;&gt; {
+    Some(Box::new(PointerHandler))
+}
+
+struct CompositorState {
+    theme: xcursor::Theme,
+    cursor: Option&lt;wlroots::output::Cursor&gt;
+}
+
+fn main() {
+    init_logging(WLR_DEBUG, None);
+    let theme = xcursor::Theme::load_theme(None, 16)
+        .expect(&quot;Could not create xcursor manager&quot;);
+    let output_builder = wlroots::output::manager::Builder::default()
+        .output_added(output_added);
+    let input_builder = wlroots::input::manager::Builder::default()
+        .pointer_added(pointer_added)
+        .keyboard_added(keyboard_added);
+    let compositor = compositor::Builder::new()
+        .gles2(true)
+        .input_manager(input_builder)
+        .output_manager(output_builder)
+        .build_auto(CompositorState { theme, cursor: None });
+    compositor.run();
+}
+</code></pre></pre>
+<blockquote>
+<a class="header" href="#box-of-the-socratic-teaching-style" id="box-of-the-socratic-teaching-style"><h1>Box of the Socratic Teaching Style</h1></a>
+<p>Before continuing, I suggest you think for a moment on some complications or
+desirable features we ignored in this design. Try using the above example
+yourself and see if there's any bugs in it.</p>
+<p>When considering features for your compositor, it's important to consider
+setups different from your own, which can help ensure your compositor is
+flexible enough to withstand the &quot;real world&quot;.</p>
+</blockquote>
+<a class="header" href="#problems-with-this-approach" id="problems-with-this-approach"><h2>Problems with this approach</h2></a>
+<p>Unfortunately, this is a very bad solution to the problem. One problem that's
+obvious if the above example is tried is that there are no bounds checks for
+when the cursor goes outside the output.</p>
+<p>Another problem, which is more difficult to solve, is when multiple outputs are
+connected. When this happens only the last one gets a cursor and the others are
+inaccessible. This is because each output is its own buffer and have no relation
+to the others. So a relationship between outputs must be establish where it's
+possible to &quot;move&quot; to another output when the edge of another is reached.</p>
+<p>Finally, this solution also doesn't address how to react to drawing tablets or
+touch screens.</p>
+<p>These problems are all very complicated, not to mention very boring. In order to
+solve them wlroots provides two semi-connected abstractions: a
+<a href="http://way-cooler.org/docs/wlroots/cursor/struct.Cursor.html">Cursor</a> and a
+<a href="http://way-cooler.org/docs/wlroots/output/layout/struct.Layout.html">Layout</a>.</p>
+<hr />
+<p><sup>1</sup> Note that in Wayland there are no restrictions on the number of
+cursors. Multiple cursors can be rendered at the same time and can be controlled
+by any number of other input devices (including fake ones).</p>
+<p><sup>2</sup> Non-exhaustive list: common two/three button mice, multi-button
+mice, trackpoints, touchpads, and trackballs.</p>
+<p><sup>3</sup> Generally a <a href="http://way-cooler.org/docs/wlroots/cursor/xcursor/struct.Manager.html">theme
+manager</a>
+is used to generate these themes, but this will be ignored for now.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="getting_to_the_point.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="wlr_cursor.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="getting_to_the_point.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="wlr_cursor.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
